@@ -11,27 +11,14 @@ import SocialLinks from "./SocialLinks";
 import { IoMdCart } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+
 export const headerNavigation = [
-  {
-    title: "Home",
-    link: "/",
-  },
-  {
-    title: "Shop",
-    link: "/shop",
-  },
-  {
-    title: "About",
-    link: "/about",
-  },
-  {
-    title: "Contact",
-    link: "/contact",
-  },
-  {
-    title: "Orders",
-    link: "/orders",
-  },
+  { title: "home", link: "/" },
+  { title: "shop", link: "/shop" },
+  { title: "about", link: "/about" },
+  { title: "contact", link: "/contact" },
+  { title: "orders", link: "/orders" },
 ];
 
 const Header = () => {
@@ -39,21 +26,28 @@ const Header = () => {
   const { products, userInfo, orderCount } = useSelector(
     (state) => state.orebiReducer
   );
+
   let [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  // ✅ Đặt useTranslation ở đây
+  const { i18n, t } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
   };
 
   return (
     <div className="sticky top-0 z-50 border-b border-gray-200 shadow-sm bg-white/95 backdrop-blur-sm">
-      {" "}
       <Container className="flex items-center justify-between py-4 lg:py-6 gap-x-3 md:gap-x-7">
+        {/* Logo */}
         <Link to={"/"} className="flex-shrink-0">
           <img src={logo} alt="logo" className="w-auto h-[80px]" />
         </Link>
 
         <SearchInput />
 
+        {/* Navigation + user + cart */}
         <div className="items-center hidden gap-4 text-sm font-medium text-gray-700 uppercase md:inline-flex lg:gap-x-6">
           {headerNavigation.map((item) => (
             <NavLink
@@ -67,8 +61,8 @@ const Header = () => {
               state={{ data: location.pathname.split("/")[1] }}
             >
               <div className="relative flex items-center">
-                {item?.title}
-                {item?.title === "Orders" && userInfo && orderCount > 0 && (
+                {t(item?.title)}
+                {item?.title === "orders" && userInfo && orderCount > 0 && (
                   <span className="absolute flex items-center justify-center w-4 h-4 text-xs font-medium text-white bg-red-500 rounded-full -right-1 -top-2 animate-pulse">
                     {orderCount}
                   </span>
@@ -84,6 +78,7 @@ const Header = () => {
             </NavLink>
           ))}
 
+          {/* Cart */}
           <Link
             to={"/cart"}
             className="relative p-2 text-2xl text-gray-700 transition-colors duration-300 hover:text-black"
@@ -96,6 +91,7 @@ const Header = () => {
             )}
           </Link>
 
+          {/* User */}
           {userInfo ? (
             <Link
               to={"/profile"}
@@ -116,8 +112,19 @@ const Header = () => {
               <FaUserAlt />
             </Link>
           )}
+
+          {/* ✅ Dropdown chọn ngôn ngữ */}
+          <select
+            onChange={(e) => changeLanguage(e.target.value)}
+            value={i18n.language}
+            className="px-2 py-1 border rounded-md cursor-pointer focus:outline-none"
+          >
+            <option value="vi">VI</option>
+            <option value="en">EN</option>
+          </select>
         </div>
 
+        {/* Mobile Menu Btn */}
         <button
           onClick={toggleMenu}
           className="p-2 text-2xl text-gray-700 transition-all duration-300 rounded-md hover:text-black md:hidden hover:bg-gray-50"
@@ -125,6 +132,7 @@ const Header = () => {
           <HiOutlineMenu />
         </button>
 
+        {/* Mobile Menu (Dialog) giữ nguyên) */}
         <Dialog
           open={isOpen}
           onClose={() => setIsOpen(false)}
@@ -159,74 +167,28 @@ const Header = () => {
                           : ""
                       }`}
                     >
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                              location?.pathname === item?.link
-                                ? "bg-black"
-                                : "bg-gray-300"
-                            }`}
-                          />
-                          {item?.title}
-                        </div>
-                        {item?.title === "Orders" &&
-                          userInfo &&
-                          orderCount > 0 && (
-                            <span className="px-2 py-1 text-xs text-white bg-red-500 rounded-full">
-                              {orderCount}
-                            </span>
-                          )}
-                      </div>
+                      {t(item?.title)}
                     </NavLink>
                   ))}
 
-                  <Link
-                    to={"/cart"}
-                    onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 text-gray-700 transition-all duration-200 transform rounded-lg hover:bg-gray-50 hover:text-black hover:translate-x-1"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-gray-300 rounded-full" />
-                      <span>Cart</span>
-                      {products?.length > 0 && (
-                        <span className="px-2 py-1 ml-auto text-xs text-white bg-black rounded-full">
-                          {products.length}
-                        </span>
-                      )}
-                    </div>
-                  </Link>
-
-                  {userInfo ? (
-                    <Link
-                      to={"/profile"}
-                      onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 text-gray-700 transition-all duration-200 transform rounded-lg hover:bg-gray-50 hover:text-black hover:translate-x-1"
+                  {/* Dropdown ngôn ngữ trên mobile */}
+                  <div className="px-4 py-3">
+                    <select
+                      onChange={(e) => changeLanguage(e.target.value)}
+                      value={i18n.language}
+                      className="w-full px-2 py-1 border rounded-md cursor-pointer focus:outline-none"
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-gray-300 rounded-full" />
-                        <span>Profile ({userInfo?.name})</span>
-                      </div>
-                    </Link>
-                  ) : (
-                    <Link
-                      to={"/signin"}
-                      onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 text-gray-700 transition-all duration-200 transform rounded-lg hover:bg-gray-50 hover:text-black hover:translate-x-1"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-gray-300 rounded-full" />
-                        Sign In
-                      </div>
-                    </Link>
-                  )}
+                      <option value="vi">Tiếng Việt</option>
+                      <option value="en">English</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className="pt-6 mt-6 border-t border-gray-100">
                   <SocialLinks />
                 </div>
               </div>
-            </DialogPanel>{" "}
+            </DialogPanel>
           </div>
         </Dialog>
       </Container>

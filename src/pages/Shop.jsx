@@ -5,8 +5,9 @@ import ProductsSideNav from "../components/products/ProductsSideNav";
 import PaginationProductList from "../components/products/PaginationProductList";
 import { config } from "../../config";
 import { getData } from "../helpers";
-
+import { useTranslation } from "react-i18next";
 const Shop = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -132,13 +133,15 @@ const Shop = () => {
       <div className="border-b border-gray-200 bg-gray-50">
         <Container className="py-4">
           <div className="flex flex-col space-y-2">
-            <h1 className="text-3xl font-bold text-gray-900">Shop</h1>
+            <h1 className="text-3xl font-bold text-gray-900">
+              {t("Shop.Title")}
+            </h1>
             <nav className="flex text-sm text-gray-500">
               <a href="/" className="transition-colors hover:text-gray-700">
-                Home
+                {t("Shop.Home")}
               </a>
               <span className="mx-2">/</span>
-              <span className="text-gray-900">Shop</span>
+              <span className="text-gray-900">{t("Shop.Title")}</span>
             </nav>
           </div>
         </Container>
@@ -155,7 +158,7 @@ const Shop = () => {
                   onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
                   className="flex items-center justify-between w-full p-4 transition-colors border rounded-lg bg-gray-50 hover:bg-gray-100"
                 >
-                  <span className="font-medium">Filters</span>
+                  <span className="font-medium">{t("Shop.Filters")}</span>
                   <svg
                     className={`w-5 h-5 transform transition-transform duration-200 ${
                       mobileFiltersOpen ? "rotate-180" : ""
@@ -208,12 +211,12 @@ const Shop = () => {
             <div className="flex flex-col items-start justify-between gap-4 p-4 mb-8 border rounded-lg sm:flex-row sm:items-center bg-gray-50">
               <div className="flex items-center gap-4">
                 <span className="text-sm text-gray-600">
-                  Showing {(currentPage - 1) * itemsPerPage + 1}-
+                  {t("Shop.Showing")} {(currentPage - 1) * itemsPerPage + 1}-
                   {Math.min(
                     currentPage * itemsPerPage,
                     filteredProducts.length
                   )}{" "}
-                  of {filteredProducts.length} results
+                  of {filteredProducts.length} {t("Shop.OfResults")}
                 </span>
               </div>
 
@@ -221,7 +224,7 @@ const Shop = () => {
                 {/* Items per page */}
                 <div className="flex items-center gap-2">
                   <label htmlFor="perPage" className="text-sm text-gray-600">
-                    Show:
+                    {t("Shop.Show")}
                   </label>
                   <select
                     id="perPage"
@@ -238,7 +241,7 @@ const Shop = () => {
                 {/* Sort by */}
                 <div className="flex items-center gap-2">
                   <label htmlFor="sortBy" className="text-sm text-gray-600">
-                    Sort by:
+                    {t("Shop.SortBy")}
                   </label>
                   <select
                     id="sortBy"
@@ -246,10 +249,10 @@ const Shop = () => {
                     onChange={(e) => setSortBy(e.target.value)}
                     className="px-3 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                   >
-                    <option value="newest">Newest</option>
-                    <option value="price-low">Giá: Thấp - Cao</option>
-                    <option value="price-high">Giá: Cao - Thấp</option>
-                    <option value="name">Tên: A to Z</option>
+                    <option value="newest">{t("Shop.Newest")}</option>
+                    <option value="price-low">{t("Shop.PriceLowHigh")}</option>
+                    <option value="price-high">{t("Shop.PriceHighLow")}</option>
+                    <option value="name">{t("Shop.NameAToZ")}</option>
                   </select>
                 </div>
 

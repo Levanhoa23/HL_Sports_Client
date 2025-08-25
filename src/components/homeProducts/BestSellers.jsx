@@ -6,8 +6,10 @@ import Title from "../ui/title";
 import ProductCard from "../ProductCard";
 import { getData } from "../../helpers";
 import { config } from "../../../config";
+import { useTranslation } from "react-i18next";
 
 const BestSellers = () => {
+  const { t } = useTranslation();
   const settings = {
     infinite: true,
     speed: 500,
@@ -69,19 +71,21 @@ const BestSellers = () => {
     return (
       <div className="w-full py-10">
         <div className="flex items-center justify-between">
-          <Title className="text-2xl mb-3 font-bold">Our Bestsellers</Title>
+          <Title className="mb-3 text-2xl font-bold">
+            {t("bestsellers.title")}
+          </Title>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden animate-pulse"
+              className="overflow-hidden bg-white border border-gray-200 rounded-lg shadow-sm animate-pulse"
             >
-              <div className="aspect-square bg-gray-200"></div>
+              <div className="bg-gray-200 aspect-square"></div>
               <div className="p-4">
-                <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded mb-2 w-3/4"></div>
-                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                <div className="h-4 mb-2 bg-gray-200 rounded"></div>
+                <div className="w-3/4 h-3 mb-2 bg-gray-200 rounded"></div>
+                <div className="w-1/2 h-4 bg-gray-200 rounded"></div>
               </div>
             </div>
           ))}
@@ -93,7 +97,9 @@ const BestSellers = () => {
   return (
     <div className="w-full py-10">
       <div className="flex items-center justify-between">
-        <Title className="text-2xl mb-3 font-bold">Our Bestsellers</Title>
+        <Title className="mb-3 text-2xl font-bold">
+          {t("bestsellers.title")}
+        </Title>
         {/* <Link to={"/shop"}>See all</Link> */}
       </div>
 
@@ -109,7 +115,7 @@ const BestSellers = () => {
         </Slider>
       ) : (
         // Use simple grid when 3 or fewer products
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {products?.map((item) => (
             <ProductCard item={item} key={item?._id} />
           ))}
@@ -118,8 +124,8 @@ const BestSellers = () => {
 
       {/* Show message when no products */}
       {(!products || products.length === 0) && (
-        <div className="text-center py-8 text-gray-500">
-          <p>No bestsellers available at the moment.</p>
+        <div className="py-8 text-center text-gray-500">
+          <p> {t("bestsellers.empty")}</p>
         </div>
       )}
     </div>

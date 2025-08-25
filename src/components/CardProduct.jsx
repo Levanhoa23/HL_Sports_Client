@@ -1,4 +1,3 @@
-import React from "react";
 import { ImCross } from "react-icons/im";
 import { useDispatch } from "react-redux";
 import { deleteItem } from "../redux/orebiSlice";
@@ -10,8 +9,8 @@ import toast from "react-hot-toast";
 const CartProduct = ({ item }) => {
   const dispatch = useDispatch();
   return (
-    <div className="w-full grid grid-cols-5 mb-4 border py-2">
-      <div className="flex col-span-5 md:col-span-2 items-center gap-4 ml-4">
+    <div className="grid w-full grid-cols-5 py-2 mb-4 border">
+      <div className="flex items-center col-span-5 gap-4 ml-4 md:col-span-2">
         <ImCross
           onClick={() => {
             dispatch(deleteItem(item._id));
@@ -19,20 +18,20 @@ const CartProduct = ({ item }) => {
               `${item?.name.substring(0, 10)}... is deleted successfully!`
             );
           }}
-          className="text-primeColor hover:text-red-500 duration-300 cursor-pointer"
+          className="duration-300 cursor-pointer text-primeColor hover:text-red-500"
         />
         <img className="w-32 h-32" src={item.image} alt="productImage" />
-        <h1 className="font-titleFont font-semibold">{item.name}</h1>
+        <h1 className="font-semibold font-titleFont">{item.name}</h1>
       </div>
-      <div className="col-span-5 md:col-span-3 flex items-center justify-between py-4 md:py-0 px-4 md:px-0 gap-6 md:gap-0">
-        <div className="flex w-1/3 items-center text-lg font-semibold">
+      <div className="flex items-center justify-between col-span-5 gap-6 px-4 py-4 md:col-span-3 md:py-0 md:px-0 md:gap-0">
+        <div className="flex items-center w-1/3 text-lg font-semibold">
           <PriceContainer item={item} className="flex-col gap-0" />
         </div>
-        <div className="w-1/3 flex items-center gap-6 text-lg">
+        <div className="flex items-center w-1/3 gap-6 text-lg">
           <AddToCartButton item={item} className="border-red-500" />
         </div>
 
-        <div className="w-1/3 flex items-center font-titleFont font-bold text-lg">
+        <div className="flex items-center w-1/3 text-lg font-bold font-titleFont">
           <PriceFormat amount={item?.price * item?.quantity} />
         </div>
       </div>

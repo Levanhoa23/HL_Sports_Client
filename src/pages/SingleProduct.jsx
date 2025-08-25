@@ -17,7 +17,6 @@ const SingleProduct = () => {
   const [isImageZoomed, setIsImageZoomed] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loadingRelated, setLoadingRelated] = useState(false);
-  const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
 
   useEffect(() => {

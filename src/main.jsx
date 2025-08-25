@@ -20,6 +20,7 @@ import Checkout from "./pages/Checkout.jsx";
 import PaymentSuccess from "./pages/PaymentSuccess.jsx";
 import FAQ from "./pages/FAQ.jsx";
 import Blog from "./pages/Blog.jsx";
+import "./i18n";
 
 const router = createBrowserRouter(
   [

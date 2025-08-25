@@ -6,8 +6,10 @@ import { paymentCard } from "../assets/images";
 import SocialLinks from "./SocialLinks";
 import { logoLight } from "../assets/images";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
   const [emailInfo, setEmailInfo] = useState("");
   const [subscription, setSubscription] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -41,8 +43,7 @@ const Footer = () => {
               <img src={logoLight} alt="logo" className="w-auto h-[80px]" />
             </Link>
             <p className="mb-6 leading-relaxed text-gray-600">
-              Discover premium quality products with exceptional service. Your
-              trusted shopping destination for modern lifestyle essentials.
+              {t("footer.brandDescription")}
             </p>
             <SocialLinks
               className="text-gray-400 hover:text-gray-900"
@@ -53,47 +54,39 @@ const Footer = () => {
           {/* Quick Links */}
           <div>
             <h4 className="mb-6 text-lg font-semibold text-gray-900">
-              Quick Links
+              {t("footer.quickLinks.title")}
             </h4>
             <ul className="space-y-3">
               <li>
                 <a
                   href="/about"
-                  className="text-sm text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                  className="text-sm text-gray-600 hover:text-gray-900"
                 >
-                  About Us
+                  {t("footer.quickLinks.about")}
                 </a>
               </li>
               <li>
                 <a
                   href="/shop"
-                  className="text-sm text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                  className="text-sm text-gray-600 hover:text-gray-900"
                 >
-                  Shop
+                  {t("footer.quickLinks.shop")}
                 </a>
               </li>
               <li>
                 <a
                   href="/contact"
-                  className="text-sm text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                  className="text-sm text-gray-600 hover:text-gray-900"
                 >
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/blog"
-                  className="text-sm text-gray-600 transition-colors duration-200 hover:text-gray-900"
-                >
-                  Blog
+                  {t("footer.quickLinks.contact")}
                 </a>
               </li>
               <li>
                 <a
                   href="/faq"
-                  className="text-sm text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                  className="text-sm text-gray-600 hover:text-gray-900"
                 >
-                  FAQ
+                  {t("footer.quickLinks.faq")}
                 </a>
               </li>
             </ul>
@@ -102,47 +95,39 @@ const Footer = () => {
           {/* Categories */}
           <div>
             <h4 className="mb-6 text-lg font-semibold text-gray-900">
-              Categories
+              {t("footer.categories.title")}
             </h4>
             <ul className="space-y-3">
               <li>
                 <a
-                  href="/shop?category=Electronics"
-                  className="text-sm text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                  href="/shop?category=Nike"
+                  className="text-sm text-gray-600 hover:text-gray-900"
                 >
-                  Electronics
+                  {t("footer.categories.nike")}
                 </a>
               </li>
               <li>
                 <a
-                  href="/shop?category=Fashion"
-                  className="text-sm text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                  href="/shop?category=Adidas"
+                  className="text-sm text-gray-600 hover:text-gray-900"
                 >
-                  Fashion
+                  {t("footer.categories.adidas")}
                 </a>
               </li>
               <li>
                 <a
-                  href="/shop?category=Home & Garden"
-                  className="text-sm text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                  href="/shop?category=Mizuno"
+                  className="text-sm text-gray-600 hover:text-gray-900"
                 >
-                  Home & Garden
+                  {t("footer.categories.mizuno")}
                 </a>
               </li>
               <li>
                 <a
-                  href="/shop?category=Sports"
-                  className="text-sm text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                  href="/shop?category=Puma"
+                  className="text-sm text-gray-600 hover:text-gray-900"
                 >
-                  Sports
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/shop?category=Beauty"
-                  className="text-sm text-gray-600 transition-colors duration-200 hover:text-gray-900"
-                >
-                  Beauty
+                  {t("footer.categories.puma")}
                 </a>
               </li>
             </ul>
@@ -151,10 +136,10 @@ const Footer = () => {
           {/* Newsletter */}
           <div>
             <h4 className="mb-6 text-lg font-semibold text-gray-900">
-              Stay Updated
+              {t("footer.newsletter.title")}
             </h4>
             <p className="mb-4 text-sm leading-relaxed text-gray-600">
-              Subscribe to get updates on new products and exclusive offers.
+              {t("footer.newsletter.description")}
             </p>
 
             {subscription ? (
@@ -164,7 +149,7 @@ const Footer = () => {
                 className="p-4 border border-green-200 rounded-lg bg-green-50"
               >
                 <p className="text-sm font-medium text-green-700">
-                  ✓ Successfully subscribed!
+                  ✓ {t("footer.newsletter.success")}
                 </p>
               </motion.div>
             ) : (
@@ -173,9 +158,9 @@ const Footer = () => {
                   <input
                     onChange={(e) => setEmailInfo(e.target.value)}
                     value={emailInfo}
-                    className="w-full px-4 py-3 text-sm transition-all duration-200 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+                    className="w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder={t("footer.newsletter.placeholder")}
                   />
                   {errMsg && (
                     <p className="mt-2 text-xs text-red-500 animate-pulse">
@@ -185,9 +170,9 @@ const Footer = () => {
                 </div>
                 <Button
                   onClick={handleSubscription}
-                  className="w-full py-3 text-white transition-colors duration-200 bg-gray-900 rounded-lg hover:bg-gray-800"
+                  className="w-full py-3 text-white bg-gray-900 rounded-lg hover:bg-gray-800"
                 >
-                  Subscribe
+                  {t("footer.newsletter.subscribe")}
                 </Button>
               </div>
             )}
@@ -199,12 +184,14 @@ const Footer = () => {
           <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
             {/* Copyright */}
             <p className="text-sm text-gray-500">
-              © 2025 Orebi. All rights reserved.
+              © 2025 HL_Sports. {t("footer.copyright")}
             </p>
 
             {/* Payment Methods */}
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-500">We accept:</span>
+              <span className="text-sm text-gray-500">
+                {t("footer.payment")}
+              </span>
               <img
                 src={paymentCard}
                 alt="Payment methods"
@@ -214,15 +201,12 @@ const Footer = () => {
 
             {/* Legal Links */}
             <div className="flex gap-6">
-              {["Privacy Policy", "Terms of Service"].map((link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="text-sm text-gray-500 transition-colors duration-200 hover:text-gray-900"
-                >
-                  {link}
-                </a>
-              ))}
+              <a href="#" className="text-sm text-gray-500 hover:text-gray-900">
+                {t("footer.privacy")}
+              </a>
+              <a href="#" className="text-sm text-gray-500 hover:text-gray-900">
+                {t("footer.terms")}
+              </a>
             </div>
           </div>
         </div>

@@ -15,6 +15,7 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 import Container from "../components/Container";
+import { useTranslation } from "react-i18next";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const SignUp = () => {
   }, [token, navigate]);
 
   // ============= Initial State Start here =============
+  const { t } = useTranslation();
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -129,31 +131,29 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gradient-to-br from-gray-50 to-gray-100 sm:px-6 lg:px-8">
       <Container>
         <div className="sm:w-[450px] w-full mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white rounded-2xl shadow-xl p-8"
+            className="p-8 bg-white shadow-xl rounded-2xl"
           >
             {/* Header */}
-            <div className="text-center mb-8">
+            <div className="mb-8 text-center">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                className="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-4"
+                className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gray-900 rounded-full"
               >
                 <FaUserPlus className="text-2xl text-white" />
               </motion.div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Create Account
+              <h1 className="mb-2 text-3xl font-bold text-gray-900">
+                {t("signup.createAccount")}
               </h1>
-              <p className="text-gray-600">
-                Join Orebi Shopping and start your journey
-              </p>
+              <p className="text-gray-600">{t("signup.joinMessage")}</p>
             </div>
 
             {/* Form */}
@@ -162,13 +162,13 @@ const SignUp = () => {
               <div>
                 <label
                   htmlFor="clientName"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block mb-2 text-sm font-medium text-gray-700"
                 >
-                  Full Name
+                  {t("signup.fullName")}
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaUser className="h-5 w-5 text-gray-400" />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <FaUser className="w-5 h-5 text-gray-400" />
                   </div>
                   <input
                     id="clientName"
@@ -179,14 +179,14 @@ const SignUp = () => {
                     className={`block w-full pl-10 pr-3 py-3 border ${
                       errClientName ? "border-red-300" : "border-gray-300"
                     } rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-colors`}
-                    placeholder="Enter your full name"
+                    placeholder={t("signup.enterFullName")}
                   />
                 </div>
                 {errClientName && (
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-2 text-sm text-red-600 flex items-center gap-1"
+                    className="flex items-center gap-1 mt-2 text-sm text-red-600"
                   >
                     <span className="font-bold">!</span>
                     {errClientName}
@@ -198,13 +198,13 @@ const SignUp = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block mb-2 text-sm font-medium text-gray-700"
                 >
-                  Email Address
+                  {t("signup.email")}
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaEnvelope className="h-5 w-5 text-gray-400" />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <FaEnvelope className="w-5 h-5 text-gray-400" />
                   </div>
                   <input
                     id="email"
@@ -215,14 +215,14 @@ const SignUp = () => {
                     className={`block w-full pl-10 pr-3 py-3 border ${
                       errEmail ? "border-red-300" : "border-gray-300"
                     } rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-colors`}
-                    placeholder="Enter your email"
+                    placeholder={t("signup.enterEmail")}
                   />
                 </div>
                 {errEmail && (
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-2 text-sm text-red-600 flex items-center gap-1"
+                    className="flex items-center gap-1 mt-2 text-sm text-red-600"
                   >
                     <span className="font-bold">!</span>
                     {errEmail}
@@ -234,13 +234,13 @@ const SignUp = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block mb-2 text-sm font-medium text-gray-700"
                 >
-                  Password
+                  {t("signup.createPassword")}
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaLock className="h-5 w-5 text-gray-400" />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <FaLock className="w-5 h-5 text-gray-400" />
                   </div>
                   <input
                     id="password"
@@ -251,17 +251,17 @@ const SignUp = () => {
                     className={`block w-full pl-10 pr-12 py-3 border ${
                       errPassword ? "border-red-300" : "border-gray-300"
                     } rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-colors`}
-                    placeholder="Create a strong password"
+                    placeholder={t("signup.accountType")}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <FaEyeSlash className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                      <FaEyeSlash className="w-5 h-5 text-gray-400 hover:text-gray-600" />
                     ) : (
-                      <FaEye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                      <FaEye className="w-5 h-5 text-gray-400 hover:text-gray-600" />
                     )}
                   </button>
                 </div>
@@ -269,7 +269,7 @@ const SignUp = () => {
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-2 text-sm text-red-600 flex items-center gap-1"
+                    className="flex items-center gap-1 mt-2 text-sm text-red-600"
                   >
                     <span className="font-bold">!</span>
                     {errPassword}
@@ -281,25 +281,25 @@ const SignUp = () => {
               <div>
                 <label
                   htmlFor="role"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block mb-2 text-sm font-medium text-gray-700"
                 >
-                  Account Type
+                  {t("signup.accountType")}
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaCheckCircle className="h-5 w-5 text-green-500" />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <FaCheckCircle className="w-5 h-5 text-green-500" />
                   </div>
                   <input
                     id="role"
                     name="role"
                     type="text"
-                    value="User Account"
+                    value={t("signup.accountType")}
                     readOnly
-                    className="block w-full pl-10 pr-3 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-600 cursor-not-allowed"
+                    className="block w-full py-3 pl-10 pr-3 text-gray-600 border border-gray-300 rounded-lg cursor-not-allowed bg-gray-50"
                   />
                 </div>
                 <p className="mt-1 text-xs text-gray-500">
-                  All new registrations are created as user accounts
+                  {t("signup.accountTypeDesc")}
                 </p>
               </div>
 
@@ -317,19 +317,19 @@ const SignUp = () => {
                 </div>
                 <div className="text-sm">
                   <label htmlFor="terms" className="text-gray-700">
-                    I agree to the{" "}
+                    {t("signup.termsAgreement")}{" "}
                     <Link
                       to="#"
-                      className="text-gray-900 font-medium hover:underline"
+                      className="font-medium text-gray-900 hover:underline"
                     >
-                      Terms of Service
+                      {t("signup.termsOfService")}
                     </Link>{" "}
                     and{" "}
                     <Link
                       to="#"
-                      className="text-gray-900 font-medium hover:underline"
+                      className="font-medium text-gray-900 hover:underline"
                     >
-                      Privacy Policy
+                      {t("signup.privacyPolicy")}
                     </Link>
                   </label>
                 </div>
@@ -349,13 +349,13 @@ const SignUp = () => {
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Creating Account...
+                    <div className="w-5 h-5 border-2 border-white rounded-full border-t-transparent animate-spin" />
+                    {t("signup.creatingAccount")}{" "}
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
-                    Create Account
-                    <FaArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    {t("signup.createAccount")}
+                    <FaArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 )}
               </motion.button>
@@ -368,8 +368,8 @@ const SignUp = () => {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">
-                    Already have an account?
+                  <span className="px-2 text-gray-500 bg-white">
+                    {t("signup.alreadyHaveAccount")}
                   </span>
                 </div>
               </div>
@@ -379,9 +379,9 @@ const SignUp = () => {
             <div className="mt-6 text-center">
               <Link
                 to="/signin"
-                className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                className="inline-flex items-center gap-2 font-medium text-gray-600 transition-colors hover:text-gray-900"
               >
-                Sign in to your account
+                {t("signup.signIn")}
                 <FaArrowRight className="w-4 h-4" />
               </Link>
             </div>

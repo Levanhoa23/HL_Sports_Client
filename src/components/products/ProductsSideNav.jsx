@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { getData } from "../../helpers";
 import { config } from "../../../config";
+import { useTranslation } from "react-i18next";
+import PropTypes from "prop-types";
 
 const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
+  const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -58,16 +61,16 @@ const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
   return (
     <div className="w-full space-y-6">
       {/* Search */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          Search Products
+      <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+        <h3 className="mb-4 text-lg font-semibold text-gray-900">
+          {t("Shop.Search")}
         </h3>
         <div className="relative">
           <input
             type="text"
             value={searchTerm}
             onChange={handleSearchChange}
-            placeholder="Search products..."
+            placeholder={t("Shop.SearchProduct")}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
           />
           <svg
@@ -87,8 +90,10 @@ const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
       </div>
 
       {/* Categories */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
+      <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+        <h3 className="mb-4 text-lg font-semibold text-gray-900">
+          {t("Shop.Category")}
+        </h3>
         <div className="space-y-3">
           {categories.map((category) => (
             <label
@@ -101,7 +106,7 @@ const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
                 onChange={() => handleCategoryChange(category)}
                 className="w-4 h-4 text-gray-900 border-gray-300 rounded focus:ring-gray-900 focus:ring-2"
               />
-              <span className="ml-3 text-gray-700 group-hover:text-gray-900 transition-colors capitalize">
+              <span className="ml-3 text-gray-700 capitalize transition-colors group-hover:text-gray-900">
                 {category}
               </span>
             </label>
@@ -110,9 +115,11 @@ const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
       </div>
 
       {/* Brands */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Brands</h3>
-        <div className="space-y-3 max-h-60 overflow-y-auto">
+      <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+        <h3 className="mb-4 text-lg font-semibold text-gray-900">
+          {t("Shop.Brand")}
+        </h3>
+        <div className="space-y-3 overflow-y-auto max-h-60">
           {brands.map((brand) => (
             <label
               key={brand}
@@ -124,7 +131,7 @@ const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
                 onChange={() => handleBrandChange(brand)}
                 className="w-4 h-4 text-gray-900 border-gray-300 rounded focus:ring-gray-900 focus:ring-2"
               />
-              <span className="ml-3 text-gray-700 group-hover:text-gray-900 transition-colors capitalize">
+              <span className="ml-3 text-gray-700 capitalize transition-colors group-hover:text-gray-900">
                 {brand}
               </span>
             </label>
@@ -133,15 +140,15 @@ const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
       </div>
 
       {/* Price Range */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          Price Range
+      <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+        <h3 className="mb-4 text-lg font-semibold text-gray-900">
+          {t("Shop.BrandBrand")}
         </h3>
         <div className="space-y-4">
           <div className="flex gap-3">
             <div className="flex-1">
-              <label className="block text-sm text-gray-600 mb-1">
-                Min Price
+              <label className="block mb-1 text-sm text-gray-600">
+                {t("Shop.minPrice")}
               </label>
               <input
                 type="number"
@@ -154,8 +161,8 @@ const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
               />
             </div>
             <div className="flex-1">
-              <label className="block text-sm text-gray-600 mb-1">
-                Max Price
+              <label className="block mb-1 text-sm text-gray-600">
+                {t("Shop.maxPrice")}
               </label>
               <input
                 type="number"
@@ -170,26 +177,28 @@ const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
           </div>
           <button
             onClick={() => handlePriceChange(priceRange.min, priceRange.max)}
-            className="w-full bg-gray-900 text-white py-2 px-4 rounded-md hover:bg-gray-800 transition-colors"
+            className="w-full px-4 py-2 text-white transition-colors bg-gray-900 rounded-md hover:bg-gray-800"
           >
-            Apply Price Filter
+            {t("Shop.ApplyPriceFilter")}
           </button>
         </div>
 
         {/* Preset Price Ranges */}
         <div className="mt-4 space-y-2">
-          <h4 className="text-sm font-medium text-gray-700">Quick Filters:</h4>
+          <h4 className="text-sm font-medium text-gray-700">
+            {t("Shop.Quick")}
+          </h4>
           <div className="flex flex-wrap gap-2">
             {[
-              { label: "Under $50", min: 0, max: 50 },
-              { label: "$50-$100", min: 50, max: 100 },
-              { label: "$100-$200", min: 100, max: 200 },
-              { label: "Over $200", min: 200, max: 1000 },
+              { label: t("Shop.under50"), min: 0, max: 50 },
+              { label: t("Shop.50to100"), min: 50, max: 100 },
+              { label: t("Shop.100to200"), min: 100, max: 200 },
+              { label: t("Shop.over200"), min: 200, max: 1000 },
             ].map((range) => (
               <button
                 key={range.label}
                 onClick={() => handlePriceChange(range.min, range.max)}
-                className="text-xs px-3 py-1 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors"
+                className="px-3 py-1 text-xs transition-colors border border-gray-300 rounded-full hover:bg-gray-50"
               >
                 {range.label}
               </button>
@@ -199,9 +208,9 @@ const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
       </div>
 
       {/* Rating Filter */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          Customer Rating
+      <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+        <h3 className="mb-4 text-lg font-semibold text-gray-900">
+          {t("Shop.Rating")}
         </h3>
         <div className="space-y-3">
           {[5, 4, 3, 2, 1].map((rating) => (
@@ -213,7 +222,7 @@ const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
                 type="checkbox"
                 className="w-4 h-4 text-gray-900 border-gray-300 rounded focus:ring-gray-900 focus:ring-2"
               />
-              <div className="ml-3 flex items-center">
+              <div className="flex items-center ml-3">
                 <div className="flex text-yellow-400">
                   {[...Array(5)].map((_, i) => (
                     <svg
@@ -236,16 +245,27 @@ const ProductsSideNav = ({ onFilterChange, filters, onClearFilters }) => {
       </div>
 
       {/* Clear Filters */}
-      <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+      <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
         <button
           onClick={onClearFilters}
-          className="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+          className="w-full px-4 py-3 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
         >
-          Clear All Filters
+          {t("Shop.ClearFilters")}
         </button>
       </div>
     </div>
   );
+};
+ProductsSideNav.propTypes = {
+  onFilterChange: PropTypes.func.isRequired,
+  onClearFilters: PropTypes.func.isRequired,
+  filters: PropTypes.shape({
+    search: PropTypes.string,
+    category: PropTypes.string,
+    brand: PropTypes.string,
+    priceRange: PropTypes.string,
+    rating: PropTypes.number,
+  }),
 };
 
 export default ProductsSideNav;

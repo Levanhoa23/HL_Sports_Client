@@ -11,48 +11,51 @@ import Container from "./Container";
 import PriceFormat from "./PriceFormat";
 import { motion } from "framer-motion";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+import { useTranslation } from "react-i18next";
 
 const bannerData = [
   {
-    title: "Nike Vapor 16 Elite",
-    subtitle: "Giày bóng đá hiệu suất cao",
-    description:
-      "Chiếm lĩnh sân cỏ với tốc độ, chính xác và thoải mái tối đa. Sở hữu ngay Nike Vapor 16 Elite!",
-    discount: "Giảm đến 30%",
+    id: "nike",
+    title: "banner.nike.title",
+    subtitle: "banner.nike.subtitle",
+    description: "banner.nike.description",
+    discount: "banner.nike.discount",
     from: 249.99,
-    sale: "Còn hàng có hạn",
+    sale: "banner.nike.sale",
     image: bannerImgOne,
-    buttonText: "Mua Ngay",
+    buttonText: "banner.button.buyNow",
   },
   {
-    title: "Adidas Messi",
-    subtitle: "Giày đá bóng đỉnh cao",
-    description:
-      "Trải nghiệm tốc độ, kiểm soát và thoải mái tuyệt đối trên sân cỏ với Adidas Messi.",
-    discount: "Giảm đến 20%",
-    from: 299.99, // Giá ví dụ, bạn có thể chỉnh theo giá thực tế
-    sale: "Ưu đãi đặc biệt",
-    image: bannerImgTwo, // giữ hoặc đổi sang hình Adidas Messi
-    buttonText: "Mua Ngay",
+    id: "adidas",
+    title: "banner.adidas.title",
+    subtitle: "banner.adidas.subtitle",
+    description: "banner.adidas.description",
+    discount: "banner.adidas.discount",
+    from: 299.99,
+    sale: "banner.adidas.sale",
+    image: bannerImgTwo,
+    buttonText: "banner.button.buyNow",
   },
   {
-    title: "Mizuno",
-    subtitle: "Giày bóng đá hiệu suất cao",
-    description:
-      "Cảm nhận sự thoải mái, kiểm soát tuyệt đối và tốc độ trên sân với Mizuno – lựa chọn cho những cầu thủ chuyên nghiệp.",
-    discount: "Miễn phí vận chuyển",
-    from: 279.99, // Giá ví dụ, bạn có thể chỉnh theo giá thực tế
-    sale: "Ưu đãi cuối tuần",
-    image: bannerImgThree, // giữ hoặc đổi sang hình giày Mizuno
-    buttonText: "Mua Ngay",
+    id: "mizuno",
+    title: "banner.mizuno.title",
+    subtitle: "banner.mizuno.subtitle",
+    description: "banner.mizuno.description",
+    discount: "banner.mizuno.discount",
+    from: 279.99,
+    sale: "banner.mizuno.sale",
+    image: bannerImgThree,
+    buttonText: "banner.button.buyNow",
   },
 ];
 
 const Banner = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [dotActive, setDocActive] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const sliderRef = useRef(null);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -103,6 +106,7 @@ const Banner = () => {
       },
     ],
   };
+
   return (
     <div
       className="w-full h-[70vh] min-h-[500px] max-h-[700px] relative overflow-hidden group bg-white"
@@ -143,7 +147,7 @@ const Banner = () => {
                     >
                       <span className="inline-flex items-center px-6 py-3 text-sm font-bold tracking-wider text-white uppercase rounded-full shadow-lg bg-gradient-to-r from-red-600 to-red-500">
                         <span className="w-2 h-2 mr-2 bg-white rounded-full animate-pulse"></span>
-                        {item?.sale}
+                        {t(item.sale)}
                       </span>
                     </motion.div>
 
@@ -154,7 +158,7 @@ const Banner = () => {
                       transition={{ duration: 0.7, delay: 0.3 }}
                       className="py-2 text-3xl font-black leading-tight text-transparent sm:text-4xl md:text-6xl lg:leading-none bg-gradient-to-r from-gray-800 via-gray-900 to-black bg-clip-text"
                     >
-                      {item?.title}
+                      {t(item.title)}
                     </motion.h1>
 
                     {/* Subtitle */}
@@ -164,7 +168,7 @@ const Banner = () => {
                       transition={{ duration: 0.6, delay: 0.4 }}
                       className="text-lg font-medium leading-relaxed text-gray-600 sm:text-xl"
                     >
-                      {item?.subtitle}
+                      {t(item.subtitle)}
                     </motion.p>
 
                     {/* Description */}
@@ -174,7 +178,7 @@ const Banner = () => {
                       transition={{ duration: 0.6, delay: 0.5 }}
                       className="max-w-2xl mx-auto text-base leading-relaxed text-gray-500 sm:text-lg md:text-xl lg:mx-0"
                     >
-                      {item?.description}
+                      {t(item.description)}
                     </motion.p>
 
                     {/* Discount & Price */}
@@ -186,12 +190,12 @@ const Banner = () => {
                     >
                       <div className="flex items-center justify-center lg:justify-start">
                         <div className="text-2xl font-black text-transparent sm:text-3xl md:text-4xl bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text">
-                          {item?.discount}
+                          {t(item.discount)}
                         </div>
                       </div>
                       <div className="flex items-center justify-center gap-3 lg:justify-start">
                         <span className="text-base font-medium text-gray-600 sm:text-lg">
-                          Starting from
+                          {t("banner.startingFrom")}
                         </span>
                         <PriceFormat
                           amount={item?.from}
@@ -213,7 +217,7 @@ const Banner = () => {
                       >
                         <span className="absolute inset-0 transition-transform duration-300 origin-left transform scale-x-0 bg-gradient-to-r from-gray-800 to-black group-hover:scale-x-100"></span>
                         <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
-                          {item?.buttonText}
+                          {t(item.buttonText)}
                         </span>
                         <svg
                           className="relative z-10 w-4 h-4 transition-all duration-300 lg:w-5 lg:h-5 group-hover:translate-x-2 group-hover:text-white"

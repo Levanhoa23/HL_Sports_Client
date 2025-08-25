@@ -3,17 +3,28 @@ import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import PriceFormat from "./PriceFormat";
 import { twMerge } from "tailwind-merge";
+import { useTranslation } from "react-i18next";
 
 const PriceContainer = ({ item, className }) => {
   const { products } = useSelector((state) => state.orebiReducer);
   const [existingProduct, setExistingProduct] = useState(null);
+  const { i18n } = useTranslation();
+  const lang = i18n.language || "en";
+
+  // map i18n.language -> locale
+  const localeMap = {
+    en: "en-US",
+    vi: "vi-VN",
+  };
+  const locale = localeMap[lang] || "en-US";
+
   useEffect(() => {
     const availableItem = products.find(
       (product) => product?._id === item?._id
     );
-
     setExistingProduct(availableItem || null);
   }, [products, item]);
+
   const regularPrice = () => {
     if (existingProduct) {
       const price = existingProduct?.price || 0;
@@ -36,6 +47,7 @@ const PriceContainer = ({ item, className }) => {
       return item?.price || 0;
     }
   };
+
   return (
     <div
       className={twMerge("flex items-center justify-center gap-2", className)}
@@ -45,16 +57,19 @@ const PriceContainer = ({ item, className }) => {
           <PriceFormat
             amount={regularPrice()}
             className="text-sm text-gray-400 line-through"
+            locale={locale}
           />
           <PriceFormat
             amount={discountedPrice()}
             className="text-sm font-medium text-black"
+            locale={locale}
           />
         </>
       ) : (
         <PriceFormat
           amount={discountedPrice()}
           className="text-sm font-medium text-black"
+          locale={locale}
         />
       )}
     </div>

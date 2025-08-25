@@ -22,8 +22,10 @@ import {
   FaSortDown,
   FaShoppingCart,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const Order = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.orebiReducer.userInfo);
@@ -191,7 +193,7 @@ const Order = () => {
                   navigate("/cart");
                   toast.dismiss(t.id);
                 }}
-                className="bg-gray-900 text-white px-3 py-1 rounded text-sm hover:bg-gray-800"
+                className="px-3 py-1 text-sm text-white bg-gray-900 rounded hover:bg-gray-800"
               >
                 View Cart
               </button>
@@ -272,9 +274,9 @@ const Order = () => {
   if (loading) {
     return (
       <Container>
-        <div className="min-h-screen flex items-center justify-center">
+        <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
-            <div className="w-12 h-12 border-4 border-gray-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <div className="w-12 h-12 mx-auto mb-4 border-4 border-gray-900 rounded-full border-t-transparent animate-spin"></div>
             <p className="text-gray-600">Loading your orders...</p>
           </div>
         </div>
@@ -285,16 +287,16 @@ const Order = () => {
   if (error) {
     return (
       <Container>
-        <div className="min-h-screen flex items-center justify-center">
+        <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
-            <FaTimes className="w-16 h-16 text-red-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <FaTimes className="w-16 h-16 mx-auto mb-4 text-red-500" />
+            <h2 className="mb-2 text-2xl font-bold text-gray-900">
               Error Loading Orders
             </h2>
-            <p className="text-gray-600 mb-4">{error}</p>
+            <p className="mb-4 text-gray-600">{error}</p>
             <button
               onClick={fetchUserOrders}
-              className="bg-gray-900 text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors"
+              className="px-6 py-2 text-white transition-colors bg-gray-900 rounded-md hover:bg-gray-800"
             >
               Try Again
             </button>
@@ -310,16 +312,16 @@ const Order = () => {
       <div className="bg-white border-b border-gray-200">
         <Container className="py-8">
           <div className="flex flex-col space-y-2">
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+            <h1 className="flex items-center gap-3 text-3xl font-bold text-gray-900">
               <FaShoppingBag className="w-8 h-8" />
-              My Orders
+              {t("Orders.Order")}
             </h1>
             <nav className="flex text-sm text-gray-500">
-              <Link to="/" className="hover:text-gray-700 transition-colors">
-                Home
+              <Link to="/" className="transition-colors hover:text-gray-700">
+                {t("Orders.Hom")}
               </Link>
               <span className="mx-2">/</span>
-              <span className="text-gray-900">Orders</span>
+              <span className="text-gray-900">{t("Orders.Order")}</span>
             </nav>
           </div>
         </Container>
@@ -331,19 +333,19 @@ const Order = () => {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="text-center py-16"
+            className="py-16 text-center"
           >
             <div className="max-w-md mx-auto">
-              <FaShoppingBag className="w-24 h-24 text-gray-300 mx-auto mb-6" />
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              <FaShoppingBag className="w-24 h-24 mx-auto mb-6 text-gray-300" />
+              <h2 className="mb-2 text-2xl font-bold text-gray-900">
                 No Orders Yet
               </h2>
-              <p className="text-gray-600 mb-8">
+              <p className="mb-8 text-gray-600">
                 You haven&apos;t placed any orders yet. Start shopping to see
                 your orders here!
               </p>
               <Link to="/shop">
-                <button className="bg-gray-900 text-white px-8 py-3 rounded-md hover:bg-gray-800 transition-colors font-medium">
+                <button className="px-8 py-3 font-medium text-white transition-colors bg-gray-900 rounded-md hover:bg-gray-800">
                   Start Shopping
                 </button>
               </Link>
@@ -353,23 +355,24 @@ const Order = () => {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <p className="text-gray-600">
-                {orders.length} order{orders.length !== 1 ? "s" : ""} found
+                {orders.length} {t("Orders.Order")}
+                {orders.length !== 1 ? "" : ""} {t("Orders.found")}
               </p>
               <button
                 onClick={fetchUserOrders}
-                className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                className="text-sm font-medium text-blue-600 hover:text-blue-700"
               >
-                Refresh
+                {t("Orders.Refresh")}
               </button>
             </div>
 
             {/* Table View */}
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+            <div className="overflow-hidden bg-white border border-gray-200 rounded-lg">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         <button
                           onClick={() => handleSort("_id")}
                           className="flex items-center gap-1 hover:text-gray-700"
@@ -386,7 +389,7 @@ const Order = () => {
                           )}
                         </button>
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         <button
                           onClick={() => handleSort("date")}
                           className="flex items-center gap-1 hover:text-gray-700"
@@ -403,10 +406,10 @@ const Order = () => {
                           )}
                         </button>
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         Items
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         <button
                           onClick={() => handleSort("amount")}
                           className="flex items-center gap-1 hover:text-gray-700"
@@ -423,7 +426,7 @@ const Order = () => {
                           )}
                         </button>
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         <button
                           onClick={() => handleSort("status")}
                           className="flex items-center gap-1 hover:text-gray-700"
@@ -440,10 +443,10 @@ const Order = () => {
                           )}
                         </button>
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         Payment
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                         Actions
                       </th>
                     </tr>
@@ -455,7 +458,7 @@ const Order = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
-                        className="hover:bg-gray-50 cursor-pointer"
+                        className="cursor-pointer hover:bg-gray-50"
                         onClick={() => openOrderModal(order)}
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -473,23 +476,23 @@ const Order = () => {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center">
-                            <div className="flex -space-x-2 mr-3">
+                            <div className="flex mr-3 -space-x-2">
                               {order.items.slice(0, 3).map((item, index) => (
                                 <div
                                   key={index}
-                                  className="w-8 h-8 bg-gray-100 rounded-full border-2 border-white overflow-hidden"
+                                  className="w-8 h-8 overflow-hidden bg-gray-100 border-2 border-white rounded-full"
                                 >
                                   {item.image && (
                                     <img
                                       src={item.image}
                                       alt={item.name}
-                                      className="w-full h-full object-cover"
+                                      className="object-cover w-full h-full"
                                     />
                                   )}
                                 </div>
                               ))}
                               {order.items.length > 3 && (
-                                <div className="w-8 h-8 bg-gray-200 rounded-full border-2 border-white flex items-center justify-center">
+                                <div className="flex items-center justify-center w-8 h-8 bg-gray-200 border-2 border-white rounded-full">
                                   <span className="text-xs text-gray-600">
                                     +{order.items.length - 3}
                                   </span>
@@ -501,7 +504,7 @@ const Order = () => {
                                 {order.items.length} item
                                 {order.items.length !== 1 ? "s" : ""}
                               </div>
-                              <div className="text-sm text-gray-500 truncate max-w-xs">
+                              <div className="max-w-xs text-sm text-gray-500 truncate">
                                 {order.items[0]?.name}
                                 {order.items.length > 1 &&
                                   `, +${order.items.length - 1} more`}
@@ -540,28 +543,28 @@ const Order = () => {
                               order.paymentStatus.slice(1)}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
                           <div className="flex gap-2">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 openOrderModal(order);
                               }}
-                              className="text-blue-600 hover:text-blue-900 transition-colors"
+                              className="text-blue-600 transition-colors hover:text-blue-900"
                               title="View Details"
                             >
                               <FaEye className="w-4 h-4" />
                             </button>
                             <button
                               onClick={(e) => handleAddOrderToCart(order, e)}
-                              className="text-green-600 hover:text-green-900 transition-colors"
+                              className="text-green-600 transition-colors hover:text-green-900"
                               title="Add to Cart"
                             >
                               <FaShoppingCart className="w-4 h-4" />
                             </button>
                             <Link
                               to={`/checkout/${order._id}`}
-                              className="text-gray-600 hover:text-gray-900 transition-colors"
+                              className="text-gray-600 transition-colors hover:text-gray-900"
                               title="Order Details"
                               onClick={(e) => e.stopPropagation()}
                             >
@@ -570,7 +573,7 @@ const Order = () => {
                             {order.paymentStatus === "pending" && (
                               <Link
                                 to={`/checkout/${order._id}`}
-                                className="text-orange-600 hover:text-orange-900 transition-colors"
+                                className="text-orange-600 transition-colors hover:text-orange-900"
                                 title="Pay Now"
                                 onClick={(e) => e.stopPropagation()}
                               >
@@ -603,24 +606,24 @@ const Order = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
               onClick={cancelAddToCart}
             >
               <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
-                className="bg-white rounded-lg max-w-md w-full p-6"
+                className="w-full max-w-md p-6 bg-white rounded-lg"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="text-center">
-                  <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 mb-4">
-                    <FaShoppingCart className="h-6 w-6 text-yellow-600" />
+                  <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-yellow-100 rounded-full">
+                    <FaShoppingCart className="w-6 h-6 text-yellow-600" />
                   </div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  <h3 className="mb-2 text-lg font-medium text-gray-900">
                     Add Order to Cart
                   </h3>
-                  <p className="text-sm text-gray-500 mb-6">
+                  <p className="mb-6 text-sm text-gray-500">
                     Are you sure you want to move all items from order{" "}
                     <span className="font-semibold">
                       #{confirmModal.order._id.slice(-8).toUpperCase()}
@@ -632,8 +635,8 @@ const Order = () => {
                   </p>
 
                   {/* Order Items Preview */}
-                  <div className="bg-gray-50 rounded-lg p-3 mb-6 max-h-40 overflow-y-auto">
-                    <div className="text-xs text-gray-500 mb-2 flex justify-between font-medium">
+                  <div className="p-3 mb-6 overflow-y-auto rounded-lg bg-gray-50 max-h-40">
+                    <div className="flex justify-between mb-2 text-xs font-medium text-gray-500">
                       <span>Items to add:</span>
                       <span>Qty × Price</span>
                     </div>
@@ -645,14 +648,14 @@ const Order = () => {
                       return (
                         <div
                           key={index}
-                          className="flex items-center justify-between text-sm py-1 border-b border-gray-200 last:border-b-0"
+                          className="flex items-center justify-between py-1 text-sm border-b border-gray-200 last:border-b-0"
                         >
                           <div className="flex items-center flex-1 min-w-0">
                             {item.image && (
                               <img
                                 src={item.image}
                                 alt={item.name}
-                                className="w-8 h-8 object-cover rounded mr-2 flex-shrink-0"
+                                className="flex-shrink-0 object-cover w-8 h-8 mr-2 rounded"
                               />
                             )}
                             <div className="flex flex-col flex-1 min-w-0">
@@ -667,7 +670,7 @@ const Order = () => {
                               )}
                             </div>
                           </div>
-                          <div className="text-gray-500 ml-2 flex items-center gap-2">
+                          <div className="flex items-center gap-2 ml-2 text-gray-500">
                             <span className="text-xs">x{item.quantity}</span>
                             <span className="text-xs">×</span>
                             <PriceFormat amount={item.price} />
@@ -686,13 +689,13 @@ const Order = () => {
                   <div className="flex gap-3">
                     <button
                       onClick={cancelAddToCart}
-                      className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                      className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-white border border-gray-300 rounded-md hover:bg-gray-50"
                     >
                       Cancel
                     </button>
                     <button
                       onClick={confirmAddToCart}
-                      className="flex-1 px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
+                      className="flex items-center justify-center flex-1 gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-green-600 border border-transparent rounded-md hover:bg-green-700"
                     >
                       <FaShoppingCart className="w-4 h-4" />
                       Add to Cart

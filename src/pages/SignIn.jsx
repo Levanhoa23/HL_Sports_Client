@@ -15,8 +15,10 @@ import {
   FaArrowRight,
 } from "react-icons/fa";
 import Container from "../components/Container";
+import { useTranslation } from "react-i18next";
 
 const SignIn = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -106,31 +108,29 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gradient-to-br from-gray-50 to-gray-100 sm:px-6 lg:px-8">
       <Container>
         <div className="sm:w-[450px] w-full mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white rounded-2xl shadow-xl p-8"
+            className="p-8 bg-white shadow-xl rounded-2xl"
           >
             {/* Header */}
-            <div className="text-center mb-8">
+            <div className="mb-8 text-center">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                className="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-4"
+                className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gray-900 rounded-full"
               >
                 <FaUserCircle className="text-2xl text-white" />
               </motion.div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Welcome Back
+              <h1 className="mb-2 text-3xl font-bold text-gray-900">
+                {t("signin.welcome")}
               </h1>
-              <p className="text-gray-600">
-                Sign in to your account to continue shopping
-              </p>
+              <p className="text-gray-600">{t("signin.signinMessage")}</p>
             </div>
 
             {/* Form */}
@@ -139,13 +139,13 @@ const SignIn = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block mb-2 text-sm font-medium text-gray-700"
                 >
-                  Email Address
+                  {t("signin.email")}
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaEnvelope className="h-5 w-5 text-gray-400" />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <FaEnvelope className="w-5 h-5 text-gray-400" />
                   </div>
                   <input
                     id="email"
@@ -163,7 +163,7 @@ const SignIn = () => {
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-2 text-sm text-red-600 flex items-center gap-1"
+                    className="flex items-center gap-1 mt-2 text-sm text-red-600"
                   >
                     <span className="font-bold">!</span>
                     {errEmail}
@@ -175,13 +175,13 @@ const SignIn = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block mb-2 text-sm font-medium text-gray-700"
                 >
-                  Password
+                  {t("signin.password")}
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaLock className="h-5 w-5 text-gray-400" />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <FaLock className="w-5 h-5 text-gray-400" />
                   </div>
                   <input
                     id="password"
@@ -196,13 +196,13 @@ const SignIn = () => {
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <FaEyeSlash className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                      <FaEyeSlash className="w-5 h-5 text-gray-400 hover:text-gray-600" />
                     ) : (
-                      <FaEye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                      <FaEye className="w-5 h-5 text-gray-400 hover:text-gray-600" />
                     )}
                   </button>
                 </div>
@@ -210,7 +210,7 @@ const SignIn = () => {
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-2 text-sm text-red-600 flex items-center gap-1"
+                    className="flex items-center gap-1 mt-2 text-sm text-red-600"
                   >
                     <span className="font-bold">!</span>
                     {errPassword}
@@ -222,9 +222,9 @@ const SignIn = () => {
               <div className="flex justify-end">
                 <Link
                   to="#"
-                  className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                  className="text-sm text-gray-600 transition-colors hover:text-gray-900"
                 >
-                  Forgot your password?
+                  {t("signin.forgotPassword")}
                 </Link>
               </div>
 
@@ -234,17 +234,18 @@ const SignIn = () => {
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={isLoading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                className="relative flex justify-center w-full px-4 py-3 text-sm font-medium text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-lg group hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Signing In...
+                    <div className="w-5 h-5 border-2 border-white rounded-full border-t-transparent animate-spin" />
+                    {t("signin.loading")}
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
-                    Sign In
-                    <FaArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    {t("signin.signIn")}
+
+                    <FaArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 )}
               </motion.button>
@@ -257,8 +258,8 @@ const SignIn = () => {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">
-                    Don&apos;t have an account?
+                  <span className="px-2 text-gray-500 bg-white">
+                    {t("signin.dontHaveAccount")}
                   </span>
                 </div>
               </div>
@@ -268,9 +269,10 @@ const SignIn = () => {
             <div className="mt-6 text-center">
               <Link
                 to="/signup"
-                className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                className="inline-flex items-center gap-2 font-medium text-gray-600 transition-colors hover:text-gray-900"
               >
-                Create new account
+                {t("signin.createAccount")}
+
                 <FaArrowRight className="w-4 h-4" />
               </Link>
             </div>

@@ -15,8 +15,10 @@ import {
   FaPhone,
   FaArrowLeft,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const Checkout = () => {
+  const { t } = useTranslation();
   const { orderId } = useParams();
   const navigate = useNavigate();
   const [order, setOrder] = useState(null);
@@ -111,9 +113,9 @@ const Checkout = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-gray-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-12 h-12 mx-auto mb-4 border-4 border-gray-900 rounded-full border-t-transparent animate-spin"></div>
           <p className="text-gray-600">Loading order details...</p>
         </div>
       </div>
@@ -122,17 +124,17 @@ const Checkout = () => {
 
   if (!order) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="mb-2 text-2xl font-bold text-gray-900">
             Order Not Found
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="mb-4 text-gray-600">
             The requested order could not be found.
           </p>
           <button
             onClick={() => navigate("/orders")}
-            className="bg-gray-900 text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors"
+            className="px-6 py-2 text-white transition-colors bg-gray-900 rounded-md hover:bg-gray-800"
           >
             View All Orders
           </button>
@@ -150,27 +152,30 @@ const Checkout = () => {
             <FaCheckCircle className="w-8 h-8 text-green-600" />
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
-                Order Confirmation
+                {t("OrderConfirmation.Title")}
               </h1>
-              <p className="text-gray-600">Order ID: #{order._id}</p>
+              <p className="text-gray-600">
+                {t("OrderConfirmation.OrderID")}
+                {order._id}
+              </p>
             </div>
           </div>
         </Container>
       </div>
 
       <Container className="py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Order Details */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-6 lg:col-span-2">
             {/* Order Status */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Order Status
+            <div className="p-6 bg-white border border-gray-200 rounded-lg">
+              <h2 className="mb-4 text-xl font-semibold text-gray-900">
+                {t("OrderConfirmation.OrderStatus")}
               </h2>
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center space-x-2">
                   <span className="text-sm font-medium text-gray-700">
-                    Order Status:
+                    {t("OrderConfirmation.OrderStatus")}
                   </span>
                   <span
                     className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(
@@ -183,7 +188,7 @@ const Checkout = () => {
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-sm font-medium text-gray-700">
-                    Payment:
+                    {t("OrderConfirmation.Payment")}
                   </span>
                   <span
                     className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getPaymentStatusColor(
@@ -197,28 +202,29 @@ const Checkout = () => {
                 <div className="flex items-center space-x-2">
                   <FaClock className="w-4 h-4 text-gray-500" />
                   <span className="text-sm text-gray-600">
-                    Placed on {new Date(order.date).toLocaleDateString()}
+                    {t("OrderConfirmation.PlacedOn")}{" "}
+                    {new Date(order.date).toLocaleDateString()}
                   </span>
                 </div>
               </div>
             </div>
 
             {/* Order Items */}
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+            <div className="overflow-hidden bg-white border border-gray-200 rounded-lg">
               <div className="p-6 border-b border-gray-200">
                 <h2 className="text-xl font-semibold text-gray-900">
-                  Order Items
+                  {t("OrderConfirmation.OrderItems")}
                 </h2>
               </div>
               <div className="divide-y divide-gray-200">
                 {order.items.map((item, index) => (
-                  <div key={index} className="p-6 flex items-center space-x-4">
-                    <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                  <div key={index} className="flex items-center p-6 space-x-4">
+                    <div className="flex-shrink-0 w-16 h-16 overflow-hidden bg-gray-100 rounded-lg">
                       {item.image && (
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="w-full h-full object-cover"
+                          className="object-cover w-full h-full"
                         />
                       )}
                     </div>
@@ -227,7 +233,7 @@ const Checkout = () => {
                         {item.name}
                       </h3>
                       <p className="text-sm text-gray-600">
-                        Quantity: {item.quantity}
+                        {t("OrderConfirmation.Q")} {item.quantity}
                       </p>
                     </div>
                     <div className="text-right">
@@ -235,7 +241,7 @@ const Checkout = () => {
                         <PriceFormat amount={item.price} />
                       </div>
                       <div className="text-sm text-gray-600">
-                        Total:{" "}
+                        {t("OrderConfirmation.Total")}{" "}
                         <PriceFormat amount={item.price * item.quantity} />
                       </div>
                     </div>
@@ -245,10 +251,10 @@ const Checkout = () => {
             </div>
 
             {/* Delivery Address */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <div className="p-6 bg-white border border-gray-200 rounded-lg">
+              <h2 className="flex items-center gap-2 mb-4 text-xl font-semibold text-gray-900">
                 <FaMapMarkerAlt className="w-5 h-5" />
-                Delivery Address
+                {t("OrderConfirmation.DeliveryAddress")}
               </h2>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -284,27 +290,34 @@ const Checkout = () => {
 
           {/* Payment Section */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg border border-gray-200 p-6 sticky top-8">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Payment
+            <div className="sticky p-6 bg-white border border-gray-200 rounded-lg top-8">
+              <h2 className="mb-6 text-xl font-semibold text-gray-900">
+                {t("OrderConfirmation.PaymentTitle")}
               </h2>
 
               {/* Order Summary */}
-              <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
+              <div className="pb-6 mb-6 space-y-3 border-b border-gray-200">
                 <div className="flex justify-between">
                   <span className="text-gray-600">
-                    Subtotal ({order.items.length} items)
+                    {t("OrderConfirmation.Subtt")} ({order.items.length}{" "}
+                    {t("OrderConfirmation.items")})
                   </span>
                   <span className="font-medium">
                     <PriceFormat amount={order.amount} />
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
-                  <span className="font-medium text-green-600">Free</span>
+                  <span className="text-gray-600">
+                    {t("OrderConfirmation.ship")}
+                  </span>
+                  <span className="font-medium text-green-600">
+                    {t("OrderConfirmation.free")}
+                  </span>
                 </div>
                 <div className="flex justify-between text-lg font-semibold">
-                  <span className="text-gray-900">Total</span>
+                  <span className="text-gray-900">
+                    {t("OrderConfirmation.tal")}
+                  </span>
                   <span className="text-gray-900">
                     <PriceFormat amount={order.amount} />
                   </span>
@@ -316,21 +329,21 @@ const Checkout = () => {
                 <div className="space-y-4">
                   {paymentStep === "selection" && (
                     <>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                        Choose Payment Method
+                      <h3 className="mb-3 text-lg font-semibold text-gray-900">
+                        {t("OrderConfirmation.choose")}
                       </h3>
 
                       {order.paymentMethod === "cod" ? (
                         <div className="space-y-3">
-                          <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                          <div className="p-4 border border-green-200 rounded-lg bg-green-50">
                             <div className="flex items-center gap-3">
                               <FaMoneyBillWave className="w-6 h-6 text-green-600" />
                               <div>
                                 <h4 className="font-semibold text-green-800">
-                                  Cash on Delivery
+                                  {t("OrderConfirmation.cash")}
                                 </h4>
                                 <p className="text-sm text-green-700">
-                                  Pay when your order is delivered
+                                  {t("OrderConfirmation.pay")}
                                 </p>
                               </div>
                             </div>
@@ -338,28 +351,28 @@ const Checkout = () => {
 
                           <button
                             onClick={handlePayOnline}
-                            className="w-full flex items-center justify-center gap-3 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                            className="flex items-center justify-center w-full gap-3 px-4 py-3 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
                           >
                             <FaCreditCard className="w-5 h-5" />
-                            Pay Online Now
+                            {t("OrderConfirmation.payOnline")}
                           </button>
                         </div>
                       ) : (
                         <>
                           <button
                             onClick={() => handlePayment("stripe")}
-                            className="w-full flex items-center justify-center gap-3 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                            className="flex items-center justify-center w-full gap-3 px-4 py-3 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
                           >
                             <FaCreditCard className="w-5 h-5" />
-                            Pay with Card
+                            {t("OrderConfirmation.paycard")}
                           </button>
 
                           <button
                             onClick={() => handlePayment("cod")}
-                            className="w-full flex items-center justify-center gap-3 bg-gray-100 text-gray-900 py-3 px-4 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                            className="flex items-center justify-center w-full gap-3 px-4 py-3 font-medium text-gray-900 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
                           >
                             <FaMoneyBillWave className="w-5 h-5" />
-                            Cash on Delivery
+                            {t("OrderConfirmation.CashOnDelivery")}
                           </button>
                         </>
                       )}
@@ -371,12 +384,12 @@ const Checkout = () => {
                       <div className="flex items-center gap-3 mb-4">
                         <button
                           onClick={handleStripeCancel}
-                          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                          className="p-2 transition-colors rounded-lg hover:bg-gray-100"
                         >
                           <FaArrowLeft className="w-4 h-4 text-gray-600" />
                         </button>
                         <h3 className="text-lg font-semibold text-gray-900">
-                          Payment Details
+                          {t("OrderConfirmation.PaymentDetails")}
                         </h3>
                       </div>
 
@@ -392,27 +405,27 @@ const Checkout = () => {
               )}
 
               {order.paymentStatus === "paid" && (
-                <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div className="p-4 border border-green-200 rounded-lg bg-green-50">
                   <div className="flex items-center gap-3">
                     <FaCheckCircle className="w-6 h-6 text-green-600" />
                     <div>
                       <h4 className="font-semibold text-green-800">
-                        Payment Completed
+                        {t("OrderConfirmation.PaymentCompleted")}
                       </h4>
                       <p className="text-sm text-green-700">
-                        Your payment has been processed successfully
+                        {t("OrderConfirmation.PaymentSuccess")}
                       </p>
                     </div>
                   </div>
                 </div>
               )}
 
-              <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="pt-6 mt-6 border-t border-gray-200">
                 <button
                   onClick={() => navigate("/orders")}
-                  className="w-full bg-gray-100 text-gray-900 py-3 px-4 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                  className="w-full px-4 py-3 font-medium text-gray-900 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
                 >
-                  View All Orders
+                  {t("OrderConfirmation.ViewAllOrders")}
                 </button>
               </div>
             </div>

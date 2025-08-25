@@ -6,8 +6,10 @@ import Title from "../ui/title";
 import ProductCard from "../ProductCard";
 import { getData } from "../../helpers";
 import { config } from "../../../config";
+import { useTranslation } from "react-i18next";
 
 const SpecialOffers = () => {
+  const { t } = useTranslation();
   const settings = {
     infinite: true,
     speed: 500,
@@ -94,7 +96,9 @@ const SpecialOffers = () => {
   return (
     <div className="w-full py-10">
       <div className="flex items-center justify-between">
-        <Title className="mb-3 text-2xl font-bold">Special Offers</Title>
+        <Title className="mb-3 text-2xl font-bold">
+          {t("specialOffers.title")}
+        </Title>
       </div>
 
       {/* Conditionally render slider or grid based on product count */}
@@ -119,7 +123,7 @@ const SpecialOffers = () => {
       {/* Show message when no products */}
       {(!products || products.length === 0) && (
         <div className="py-8 text-center text-gray-500">
-          <p>No special offers available at the moment.</p>
+          <p>{t("specialOffers.emtry")}</p>
         </div>
       )}
     </div>
