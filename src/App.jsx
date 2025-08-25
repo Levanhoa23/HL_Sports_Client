@@ -13,7 +13,8 @@ import {
   setOrderCount,
   resetOrderCount,
 } from "./redux/orebiSlice";
-import { serverUrl } from "../config";
+import { config } from "../config";
+const serverUrl = config.baseUrl;
 
 function App() {
   const token = localStorage.getItem("token");
