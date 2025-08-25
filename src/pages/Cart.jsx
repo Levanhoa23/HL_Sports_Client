@@ -76,9 +76,15 @@ const Cart = () => {
   const fetchAddresses = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:8000/api/user/addresses", {
+      if (!token) throw new Error("User not authenticated");
+
+      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const url = `${baseUrl}/api/user/addresses`;
+
+      const response = await fetch(url, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
       const data = await response.json();
@@ -101,7 +107,12 @@ const Cart = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:8000/api/user/addresses", {
+      if (!token) throw new Error("User not authenticated");
+
+      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const url = `${baseUrl}/api/user/addresses`;
+
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -153,7 +164,10 @@ const Cart = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:8000/api/order/create", {
+
+      const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
+      const response = await fetch(`${BASE_URL}/api/order/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -44,17 +44,16 @@ const Order = () => {
   });
 
   const fetchUserOrders = useCallback(async () => {
+    const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `http://localhost:8000/api/order/my-orders`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/order/my-orders`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const data = await response.json();
       if (data.success) {

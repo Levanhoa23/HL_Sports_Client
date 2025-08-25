@@ -32,19 +32,21 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
     setCardError(null);
 
     try {
-      // Create payment intent
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        "http://localhost:8000/api/payment/stripe/create-payment-intent",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ orderId }),
-        }
-      );
+      if (!token) throw new Error("User not authenticated");
+
+      // Lấy base URL từ biến môi trường Vite
+      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const url = `${baseUrl}/api/payment/stripe/create-payment-intent`;
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ orderId }),
+      });
 
       const { clientSecret, success, message } = await response.json();
 
@@ -102,30 +104,30 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Credit Card Design */}
       <div className="relative">
-        <label className="block text-sm font-medium text-gray-700 mb-3">
+        <label className="block mb-3 text-sm font-medium text-gray-700">
           Card Information
         </label>
 
         {/* Credit Card Container */}
         <div className="relative w-full max-w-sm mx-auto">
           {/* Card Background with Gradient */}
-          <div className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 rounded-2xl p-6 shadow-2xl transform hover:scale-105 transition-transform duration-300">
+          <div className="relative p-6 transition-transform duration-300 transform shadow-2xl bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 rounded-2xl hover:scale-105">
             {/* Card Pattern/Texture */}
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent rounded-2xl"></div>
 
             {/* Chip */}
             <div className="relative mb-8">
-              <div className="w-12 h-8 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-md shadow-md flex items-center justify-center">
-                <div className="w-8 h-6 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-sm"></div>
+              <div className="flex items-center justify-center w-12 h-8 rounded-md shadow-md bg-gradient-to-br from-yellow-300 to-yellow-500">
+                <div className="w-8 h-6 rounded-sm bg-gradient-to-br from-yellow-400 to-yellow-600"></div>
               </div>
             </div>
 
             {/* Card Number Area */}
             <div className="relative mb-6">
-              <div className="text-white text-xs font-medium mb-2 opacity-80">
+              <div className="mb-2 text-xs font-medium text-white opacity-80">
                 CARD NUMBER
               </div>
-              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 border border-white/30">
+              <div className="p-3 border rounded-lg bg-white/20 backdrop-blur-sm border-white/30">
                 <CardElement
                   options={cardStyle}
                   onChange={(event) => {
@@ -136,26 +138,26 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
             </div>
 
             {/* Card Holder & Expiry */}
-            <div className="relative flex justify-between items-end">
+            <div className="relative flex items-end justify-between">
               <div>
-                <div className="text-white text-xs font-medium mb-1 opacity-80">
+                <div className="mb-1 text-xs font-medium text-white opacity-80">
                   CARD HOLDER
                 </div>
-                <div className="text-white text-sm font-semibold tracking-wider">
+                <div className="text-sm font-semibold tracking-wider text-white">
                   YOUR NAME
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-white text-xs font-medium mb-1 opacity-80">
+                <div className="mb-1 text-xs font-medium text-white opacity-80">
                   VALID THRU
                 </div>
-                <div className="text-white text-sm font-semibold">MM/YY</div>
+                <div className="text-sm font-semibold text-white">MM/YY</div>
               </div>
             </div>
 
             {/* Card Brand Logo Area */}
             <div className="absolute top-4 right-4">
-              <div className="w-12 h-8 bg-white/20 rounded-md flex items-center justify-center">
+              <div className="flex items-center justify-center w-12 h-8 rounded-md bg-white/20">
                 <FaCreditCard className="w-6 h-6 text-white/80" />
               </div>
             </div>
@@ -163,11 +165,11 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
         </div>
 
         {cardError && (
-          <p className="text-red-600 text-sm mt-3 text-center">{cardError}</p>
+          <p className="mt-3 text-sm text-center text-red-600">{cardError}</p>
         )}
       </div>
 
-      <div className="bg-gray-50 rounded-lg p-4">
+      <div className="p-4 rounded-lg bg-gray-50">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-medium text-gray-700">
             Amount to pay
@@ -186,7 +188,7 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
         <button
           type="submit"
           disabled={!stripe || isProcessing}
-          className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium flex items-center justify-center gap-2"
+          className="flex items-center justify-center flex-1 gap-2 px-6 py-3 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isProcessing ? (
             <>
@@ -204,7 +206,7 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
           type="button"
           onClick={onCancel}
           disabled={isProcessing}
-          className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 transition-colors font-medium"
+          className="px-6 py-3 font-medium transition-colors border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"
         >
           Cancel
         </button>
@@ -236,7 +238,7 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
 const StripePayment = ({ orderId, amount, onSuccess, onCancel }) => {
   return (
     <Elements stripe={stripePromise}>
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="p-6 bg-white border border-gray-200 rounded-lg">
         <div className="flex items-center gap-3 mb-6">
           <FaCreditCard className="w-6 h-6 text-blue-600" />
           <h3 className="text-xl font-semibold text-gray-900">Pay with Card</h3>

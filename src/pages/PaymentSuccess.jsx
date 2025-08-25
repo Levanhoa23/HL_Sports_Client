@@ -32,12 +32,14 @@ const PaymentSuccess = () => {
         return;
       }
 
+      const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
       try {
         const token = localStorage.getItem("token");
 
         // Confirm payment with backend
         const confirmResponse = await fetch(
-          "http://localhost:8000/api/payment/stripe/confirm-payment",
+          `${BASE_URL}/api/payment/stripe/confirm-payment`,
           {
             method: "POST",
             headers: {
@@ -95,9 +97,9 @@ const PaymentSuccess = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-green-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-12 h-12 mx-auto mb-4 border-4 border-green-600 rounded-full border-t-transparent animate-spin"></div>
           <p className="text-gray-600">Confirming your payment...</p>
         </div>
       </div>
@@ -106,17 +108,17 @@ const PaymentSuccess = () => {
 
   if (!order) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="mb-2 text-2xl font-bold text-gray-900">
             Order Not Found
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="mb-4 text-gray-600">
             Unable to confirm your payment. Please contact support.
           </p>
           <Link
             to="/orders"
-            className="bg-gray-900 text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors"
+            className="px-6 py-2 text-white transition-colors bg-gray-900 rounded-md hover:bg-gray-800"
           >
             View Orders
           </Link>
@@ -128,7 +130,7 @@ const PaymentSuccess = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Success Header */}
-      <div className="bg-gradient-to-r from-green-500 to-green-600 text-white">
+      <div className="text-white bg-gradient-to-r from-green-500 to-green-600">
         <Container className="py-12">
           <motion.div
             initial={{ y: 30, opacity: 0 }}
@@ -140,12 +142,12 @@ const PaymentSuccess = () => {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-              className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6"
+              className="flex items-center justify-center w-20 h-20 mx-auto mb-6 bg-white rounded-full"
             >
               <FaCheckCircle className="w-12 h-12 text-green-600" />
             </motion.div>
-            <h1 className="text-4xl font-bold mb-4">Payment Successful!</h1>
-            <p className="text-xl opacity-90 mb-2">
+            <h1 className="mb-4 text-4xl font-bold">Payment Successful!</h1>
+            <p className="mb-2 text-xl opacity-90">
               Thank you for your purchase
             </p>
             <p className="text-lg opacity-80">
@@ -162,24 +164,24 @@ const PaymentSuccess = () => {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
+            className="grid grid-cols-2 gap-4 mb-8 md:grid-cols-4"
           >
             <Link
               to="/"
-              className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-all group"
+              className="p-4 transition-all bg-white border border-gray-200 rounded-lg hover:shadow-md group"
             >
               <div className="text-center">
-                <FaHome className="w-6 h-6 text-gray-600 group-hover:text-blue-600 mx-auto mb-2 transition-colors" />
+                <FaHome className="w-6 h-6 mx-auto mb-2 text-gray-600 transition-colors group-hover:text-blue-600" />
                 <span className="text-sm font-medium text-gray-900">Home</span>
               </div>
             </Link>
 
             <Link
               to="/shop"
-              className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-all group"
+              className="p-4 transition-all bg-white border border-gray-200 rounded-lg hover:shadow-md group"
             >
               <div className="text-center">
-                <FaShoppingBag className="w-6 h-6 text-gray-600 group-hover:text-blue-600 mx-auto mb-2 transition-colors" />
+                <FaShoppingBag className="w-6 h-6 mx-auto mb-2 text-gray-600 transition-colors group-hover:text-blue-600" />
                 <span className="text-sm font-medium text-gray-900">
                   Shop More
                 </span>
@@ -188,10 +190,10 @@ const PaymentSuccess = () => {
 
             <Link
               to="/orders"
-              className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-all group"
+              className="p-4 transition-all bg-white border border-gray-200 rounded-lg hover:shadow-md group"
             >
               <div className="text-center">
-                <FaListAlt className="w-6 h-6 text-gray-600 group-hover:text-blue-600 mx-auto mb-2 transition-colors" />
+                <FaListAlt className="w-6 h-6 mx-auto mb-2 text-gray-600 transition-colors group-hover:text-blue-600" />
                 <span className="text-sm font-medium text-gray-900">
                   My Orders
                 </span>
@@ -200,30 +202,30 @@ const PaymentSuccess = () => {
 
             <button
               onClick={handlePrint}
-              className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-all group"
+              className="p-4 transition-all bg-white border border-gray-200 rounded-lg hover:shadow-md group"
             >
               <div className="text-center">
-                <FaPrint className="w-6 h-6 text-gray-600 group-hover:text-blue-600 mx-auto mb-2 transition-colors" />
+                <FaPrint className="w-6 h-6 mx-auto mb-2 text-gray-600 transition-colors group-hover:text-blue-600" />
                 <span className="text-sm font-medium text-gray-900">Print</span>
               </div>
             </button>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {/* Order Details */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="space-y-6 lg:col-span-2">
               {/* Payment Confirmation */}
               <motion.div
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
-                className="bg-white rounded-lg border border-gray-200 p-6"
+                className="p-6 bg-white border border-gray-200 rounded-lg"
               >
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                <h2 className="mb-4 text-xl font-semibold text-gray-900">
                   Payment Details
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-green-50 rounded-lg p-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div className="p-4 rounded-lg bg-green-50">
                     <div className="flex items-center gap-3">
                       <FaCheckCircle className="w-5 h-5 text-green-600" />
                       <div>
@@ -236,7 +238,7 @@ const PaymentSuccess = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-blue-50 rounded-lg p-4">
+                  <div className="p-4 rounded-lg bg-blue-50">
                     <div className="flex items-center gap-3">
                       <FaTruck className="w-5 h-5 text-blue-600" />
                       <div>
@@ -250,7 +252,7 @@ const PaymentSuccess = () => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-4 pt-4 border-t border-gray-200">
+                <div className="pt-4 mt-4 border-t border-gray-200">
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <FaCalendarAlt className="w-4 h-4" />
                     <span>Paid on {new Date().toLocaleDateString()}</span>
@@ -263,7 +265,7 @@ const PaymentSuccess = () => {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
-                className="bg-white rounded-lg border border-gray-200 overflow-hidden"
+                className="overflow-hidden bg-white border border-gray-200 rounded-lg"
               >
                 <div className="p-6 border-b border-gray-200">
                   <h2 className="text-xl font-semibold text-gray-900">
@@ -274,14 +276,14 @@ const PaymentSuccess = () => {
                   {order.items.map((item, index) => (
                     <div
                       key={index}
-                      className="p-6 flex items-center space-x-4"
+                      className="flex items-center p-6 space-x-4"
                     >
-                      <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                      <div className="flex-shrink-0 w-16 h-16 overflow-hidden bg-gray-100 rounded-lg">
                         {item.image && (
                           <img
                             src={item.image}
                             alt={item.name}
-                            className="w-full h-full object-cover"
+                            className="object-cover w-full h-full"
                           />
                         )}
                       </div>
@@ -308,14 +310,14 @@ const PaymentSuccess = () => {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
-                className="bg-blue-50 rounded-lg border border-blue-200 p-6"
+                className="p-6 border border-blue-200 rounded-lg bg-blue-50"
               >
-                <h2 className="text-xl font-semibold text-blue-900 mb-4">
+                <h2 className="mb-4 text-xl font-semibold text-blue-900">
                   What&apos;s Next?
                 </h2>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">
+                    <div className="flex items-center justify-center flex-shrink-0 w-6 h-6 text-sm font-bold text-white bg-blue-600 rounded-full">
                       1
                     </div>
                     <div>
@@ -329,7 +331,7 @@ const PaymentSuccess = () => {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">
+                    <div className="flex items-center justify-center flex-shrink-0 w-6 h-6 text-sm font-bold text-white bg-blue-600 rounded-full">
                       2
                     </div>
                     <div>
@@ -340,7 +342,7 @@ const PaymentSuccess = () => {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">
+                    <div className="flex items-center justify-center flex-shrink-0 w-6 h-6 text-sm font-bold text-white bg-blue-600 rounded-full">
                       3
                     </div>
                     <div>
@@ -362,12 +364,12 @@ const PaymentSuccess = () => {
               transition={{ delay: 0.4, duration: 0.5 }}
               className="lg:col-span-1"
             >
-              <div className="bg-white rounded-lg border border-gray-200 p-6 sticky top-8">
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">
+              <div className="sticky p-6 bg-white border border-gray-200 rounded-lg top-8">
+                <h2 className="mb-6 text-xl font-semibold text-gray-900">
                   Order Summary
                 </h2>
 
-                <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
+                <div className="pb-6 mb-6 space-y-3 border-b border-gray-200">
                   <div className="flex justify-between">
                     <span className="text-gray-600">
                       Subtotal ({order.items.length} items)
@@ -395,7 +397,7 @@ const PaymentSuccess = () => {
                 <div className="space-y-3">
                   <button
                     onClick={handleShare}
-                    className="w-full flex items-center justify-center gap-2 bg-gray-100 text-gray-900 py-3 px-4 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                    className="flex items-center justify-center w-full gap-2 px-4 py-3 font-medium text-gray-900 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
                   >
                     <FaShare className="w-4 h-4" />
                     Share Order
@@ -403,7 +405,7 @@ const PaymentSuccess = () => {
 
                   <Link
                     to="/shop"
-                    className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                    className="flex items-center justify-center w-full gap-2 px-4 py-3 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
                   >
                     <FaShoppingBag className="w-4 h-4" />
                     Continue Shopping

@@ -26,16 +26,16 @@ const Checkout = () => {
   const [paymentStep, setPaymentStep] = useState("selection"); // 'selection', 'stripe', 'processing'
 
   const fetchOrderDetails = useCallback(async () => {
+    const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `http://localhost:8000/api/order/user/${orderId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/order/user/${orderId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       const data = await response.json();
       if (data.success) {
         setOrder(data.order);

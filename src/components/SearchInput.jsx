@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getData } from "../helpers";
 import { useTranslation } from "react-i18next";
 
+import { config } from "../../config";
 const SearchInput = () => {
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
@@ -20,8 +21,11 @@ const SearchInput = () => {
       setFilteredProducts([]);
       return;
     }
+    const endpoint = `${
+      config.baseUrl
+    }/api/products?_search=${encodeURIComponent(search)}`;
 
-    const endpoint = `http://localhost:8000/api/products?_search=${search}`;
+    //const endpoint = `http://localhost:8000/api/products?_search=${search}`;
 
     const getProducts = async () => {
       try {
