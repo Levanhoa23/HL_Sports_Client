@@ -170,6 +170,7 @@
     "Shopping": "Giỏ Hàng",
     "Home": "Trang Chủ",
     "Cart": "Giỏ Hàng",
+    "discount": "Giảm giá",
     "product": "Sản Phẩm",
     "quantity": "Số Lượng",
     "price": "Giá",
@@ -225,7 +226,7 @@
     "ClearAll": "Xóa tất cả",
     "Loading": "Đang tải...",
     "Rating": "Đánh giá của khách hàng",
-    "ClearFilters": "Xoa bỏ tất cả bộ lọc",
+    "ClearFilters": "Xóa bỏ tất cả bộ lọc",
     "under50": "Dưới 1,2 triệu",
     "50to100": "1,2 - 2,4 triệu",
     "100to200": "2,4 - 4,8 triệu",
@@ -266,5 +267,22 @@
     "PaymentCompleted": "Thanh toán thành công",
     "PaymentSuccess": "Thanh toán của bạn đã được xử lý thành công",
     "ViewAllOrders": "Xem tất cả đơn hàng"
+  },
+  "paymentForm": {
+    "cardInformation": "Thông tin thẻ",
+    "cardNumber": "SỐ THẺ",
+    "cardHolder": "CHỦ THẺ",
+    "validThru": "HẠN SỬ DỤNG",
+    "yourName": "TÊN CỦA BẠN",
+    "mmYY": "MM/YY",
+    "amountToPay": "Số tiền cần thanh toán",
+    "secureInfo": "Thông tin thanh toán của bạn được bảo mật và mã hóa",
+    "processing": "Đang xử lý...",
+    "pay": "Thanh toán",
+    "cancel": "Hủy",
+    "visa": "Visa",
+    "mastercard": "Mastercard",
+    "amex": "American Express",
+    "paywithCard": "Thanh toán với"
   }
 }

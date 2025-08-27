@@ -194,9 +194,7 @@ const Banner = () => {
                         </div>
                       </div>
                       <div className="flex items-center justify-center gap-3 lg:justify-start">
-                        <span className="text-base font-medium text-gray-600 sm:text-lg">
-                          {t("banner.startingFrom")}
-                        </span>
+                        <span className="text-base font-medium text-gray-600 sm:text-lg"></span>
                         <PriceFormat
                           amount={item?.from}
                           className="text-2xl font-bold text-gray-800 sm:text-3xl md:text-4xl"

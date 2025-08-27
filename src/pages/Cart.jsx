@@ -78,7 +78,8 @@ const Cart = () => {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("User not authenticated");
 
-      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const baseUrl =
+        import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
       const url = `${baseUrl}/api/user/addresses`;
 
       const response = await fetch(url, {
@@ -109,7 +110,8 @@ const Cart = () => {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("User not authenticated");
 
-      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const baseUrl =
+        import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
       const url = `${baseUrl}/api/user/addresses`;
 
       const response = await fetch(url, {
@@ -122,6 +124,7 @@ const Cart = () => {
       });
 
       const data = await response.json();
+      console.log("Add address response:", data);
       if (data.success) {
         toast.success("Address added successfully!");
         fetchAddresses();
@@ -165,7 +168,8 @@ const Cart = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const BASE_URL =
+        import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 
       const response = await fetch(`${BASE_URL}/api/order/create`, {
         method: "POST",
@@ -246,14 +250,14 @@ const Cart = () => {
               <div className="overflow-hidden bg-white border border-gray-200 rounded-lg">
                 {/* Desktop Header */}
                 <div className="hidden grid-cols-10 gap-4 p-6 text-sm font-semibold text-gray-700 uppercase border-b border-gray-200 lg:grid bg-gray-50">
-                  <div className="col-span-5">{t("Cart.product")}</div>
+                  <div className="col-span-4">{t("Cart.product")}</div>
                   <div className="col-span-2 text-center">
                     {t("Cart.price")}
                   </div>
                   <div className="col-span-2 text-center">
                     {t("Cart.quantity")}
                   </div>
-                  <div className="col-span-1 text-center">
+                  <div className="col-span-2 text-center">
                     {t("Cart.total")}
                   </div>
                 </div>
@@ -381,7 +385,7 @@ const Cart = () => {
                       {/* Desktop Layout */}
                       <div className="items-center hidden gap-4 lg:grid lg:grid-cols-10">
                         {/* Product Info */}
-                        <div className="lg:col-span-5">
+                        <div className="lg:col-span-4">
                           <div className="flex items-start space-x-4">
                             <Link
                               to={`/product/${item._id}`}
@@ -444,6 +448,8 @@ const Cart = () => {
 
                         {/* Quantity Controls */}
                         <div className="lg:col-span-2">
+                          {" "}
+                          {/* giảm col-span từ 2 -> 1 cho nhỏ lại */}
                           <div className="flex lg:justify-center">
                             <div className="flex items-center border border-gray-300 rounded-md">
                               <button
@@ -451,27 +457,26 @@ const Cart = () => {
                                   handleQuantityChange(item._id, "decrease")
                                 }
                                 disabled={(item?.quantity || 1) <= 1}
-                                className="p-3 transition-colors hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="px-2 py-1 transition-colors hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                               >
                                 <FaMinus className="w-3 h-3" />
                               </button>
-                              <span className="px-4 py-3 font-medium min-w-[3rem] text-center">
+                              <span className="px-2 py-1 font-medium min-w-[2rem] text-center">
                                 {item?.quantity || 1}
                               </span>
                               <button
                                 onClick={() =>
                                   handleQuantityChange(item._id, "increase")
                                 }
-                                className="p-3 transition-colors hover:bg-gray-50"
+                                className="px-2 py-1 transition-colors hover:bg-gray-50"
                               >
                                 <FaPlus className="w-3 h-3" />
                               </button>
                             </div>
                           </div>
                         </div>
-
                         {/* Subtotal */}
-                        <div className="lg:col-span-1">
+                        <div className="lg:col-span-2">
                           <div className="flex items-center lg:justify-center">
                             <div className="lg:text-center">
                               <div className="text-lg font-semibold text-gray-900">
@@ -708,7 +713,9 @@ const Cart = () => {
 
                   {totalAmt !== discount && (
                     <div className="flex justify-between py-2">
-                      <span className="text-gray-600">{t("Cart.dicount")}</span>
+                      <span className="text-gray-600">
+                        {t("Cart.discount")}
+                      </span>
                       <span className="font-medium text-green-600">
                         -<PriceFormat amount={totalAmt - discount} />
                       </span>

@@ -42,14 +42,30 @@ const ProductCard = ({
 
           {/* Info */}
           <div className="flex flex-col justify-between flex-1 p-6">
-            <div className="flex items-center justify-between mb-2">
+            <div className="mb-3">
               <h3
                 className="text-lg font-semibold tracking-wide text-gray-900 uppercase cursor-pointer hover:text-gray-600"
                 onClick={handleProductDetails}
               >
                 {getText(item.name)}
               </h3>
+              {item?._type && (
+                <span className="block mt-1 text-xs font-medium text-gray-500 uppercase">
+                  {getText(item._type)}
+                </span>
+              )}
+              {item?.description && (
+                <p className="mt-2 text-xs text-gray-600 line-clamp-3">
+                  {getText(item.description)}
+                </p>
+              )}
+            </div>
+
+            <div className="flex items-center justify-between mt-auto">
               <PriceContainer item={item} />
+              <div className="transition-opacity duration-300 opacity-100 group-hover:opacity-100">
+                <AddToCartButton item={item} />
+              </div>
             </div>
           </div>
         </div>

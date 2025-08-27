@@ -182,7 +182,7 @@
     "No": "No delivery address found",
     "Add": " Add your first address",
     "Order": "Order Summary",
-    " Subtotal": "Subtotal",
+    "discount": "Giảm giá",
     "items": "items",
     "Shipping": "Shipping",
     "Free": "Free",
@@ -268,5 +268,22 @@
     "PaymentCompleted": "Payment Completed",
     "PaymentSuccess": "Your payment has been processed successfully",
     "ViewAllOrders": "View All Orders"
+  },
+  "paymentForm": {
+    "cardInformation": "Card Information",
+    "cardNumber": "CARD NUMBER",
+    "cardHolder": "CARD HOLDER",
+    "validThru": "VALID THRU",
+    "yourName": "YOUR NAME",
+    "mmYY": "MM/YY",
+    "amountToPay": "Amount to pay",
+    "secureInfo": "Your payment information is secure and encrypted",
+    "processing": "Processing...",
+    "pay": "Pay $",
+    "cancel": "Cancel",
+    "visa": "Visa",
+    "mastercard": "Mastercard",
+    "amex": "American Express",
+    "paywithCard": "Pay with Card"
   }
 }

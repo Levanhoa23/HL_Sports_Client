@@ -9,13 +9,14 @@ import {
 } from "@stripe/react-stripe-js";
 import { FaCreditCard, FaLock, FaSpinner } from "react-icons/fa";
 import toast from "react-hot-toast";
-
+import { useTranslation } from "react-i18next";
 // Initialize Stripe
 // Make sure to call `loadStripe` outside of a component's render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
+  const { t, i18n } = useTranslation();
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -36,7 +37,8 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
       if (!token) throw new Error("User not authenticated");
 
       // Lấy base URL từ biến môi trường Vite
-      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const baseUrl =
+        import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
       const url = `${baseUrl}/api/payment/stripe/create-payment-intent`;
 
       const response = await fetch(url, {
@@ -105,7 +107,7 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
       {/* Credit Card Design */}
       <div className="relative">
         <label className="block mb-3 text-sm font-medium text-gray-700">
-          Card Information
+          {t("paymentForm.cardInformation")}
         </label>
 
         {/* Credit Card Container */}
@@ -125,7 +127,7 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
             {/* Card Number Area */}
             <div className="relative mb-6">
               <div className="mb-2 text-xs font-medium text-white opacity-80">
-                CARD NUMBER
+                {t("paymentForm.cardNumber")}
               </div>
               <div className="p-3 border rounded-lg bg-white/20 backdrop-blur-sm border-white/30">
                 <CardElement
@@ -141,17 +143,19 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
             <div className="relative flex items-end justify-between">
               <div>
                 <div className="mb-1 text-xs font-medium text-white opacity-80">
-                  CARD HOLDER
+                  {t("paymentForm.cardHolder")}
                 </div>
                 <div className="text-sm font-semibold tracking-wider text-white">
-                  YOUR NAME
+                  {t("paymentForm.yourName")}
                 </div>
               </div>
               <div className="text-right">
                 <div className="mb-1 text-xs font-medium text-white opacity-80">
-                  VALID THRU
+                  {t("paymentForm.validThru")}
                 </div>
-                <div className="text-sm font-semibold text-white">MM/YY</div>
+                <div className="text-sm font-semibold text-white">
+                  {t("paymentForm.mmYY")}
+                </div>
               </div>
             </div>
 
@@ -168,19 +172,24 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
           <p className="mt-3 text-sm text-center text-red-600">{cardError}</p>
         )}
       </div>
-
       <div className="p-4 rounded-lg bg-gray-50">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-medium text-gray-700">
-            Amount to pay
+            {t("paymentForm.amountToPay")}
           </span>
           <span className="text-lg font-bold text-gray-900">
-            ${amount.toFixed(2)}
+            {i18n.language === "vi"
+              ? new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                  maximumFractionDigits: 0,
+                }).format(amount * 25000)
+              : `$${amount.toFixed(2)}`}
           </span>
         </div>
         <div className="flex items-center gap-2 text-xs text-gray-500">
           <FaLock className="w-3 h-3" />
-          <span>Your payment information is secure and encrypted</span>
+          <span> {t("paymentForm.secureInfo")}</span>
         </div>
       </div>
 
@@ -193,12 +202,19 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
           {isProcessing ? (
             <>
               <FaSpinner className="w-4 h-4 animate-spin" />
-              Processing...
+              {t("paymentForm.processing")}
             </>
           ) : (
             <>
               <FaCreditCard className="w-4 h-4" />
-              Pay ${amount.toFixed(2)}
+              {t("paymentForm.pay")}{" "}
+              {i18n.language === "vi"
+                ? new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                    maximumFractionDigits: 0,
+                  }).format(amount * 25000)
+                : `$${amount.toFixed(2)}`}
             </>
           )}
         </button>
@@ -224,11 +240,6 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
             alt="Mastercard"
             className="h-6"
           />
-          <img
-            src="https://js.stripe.com/v3/fingerprinted/img/amex-a49b82f46c5cd31dc8da3317e7849b70.svg"
-            alt="American Express"
-            className="h-6"
-          />
         </div>
       </div>
     </form>
@@ -236,12 +247,14 @@ const CheckoutForm = ({ orderId, amount, onSuccess, onCancel }) => {
 };
 
 const StripePayment = ({ orderId, amount, onSuccess, onCancel }) => {
+  const { t } = useTranslation();
   return (
     <Elements stripe={stripePromise}>
       <div className="p-6 bg-white border border-gray-200 rounded-lg">
         <div className="flex items-center gap-3 mb-6">
           <FaCreditCard className="w-6 h-6 text-blue-600" />
-          <h3 className="text-xl font-semibold text-gray-900">Pay with Card</h3>
+          {t("paymentForm.paywithCard")}
+          <h3 className="text-xl font-semibold text-gray-900"></h3>
         </div>
         <CheckoutForm
           orderId={orderId}
