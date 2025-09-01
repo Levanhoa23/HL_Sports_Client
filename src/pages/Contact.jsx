@@ -8,18 +8,18 @@ const Contact = () => {
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Phần thông tin liên hệ */}
-          <div className="space-y-6 text-white">
-            <div>
-              <h3 className="text-2xl font-semibold">Thông tin liên hệ</h3>
-              <p className="text-gray-300">
-                Nếu bạn có bất kỳ câu hỏi nào, hãy liên hệ với chúng tôi qua
-                thông tin bên dưới.
-              </p>
-            </div>
-            <div>
+          <div className="flex flex-col items-center space-y-6 text-white">
+            {/* Avatar to, nằm giữa */}
+
+            <h3 className="text-2xl font-semibold">Thông tin liên hệ</h3>
+            <p className="text-center text-gray-300">
+              Nếu bạn có bất kỳ câu hỏi nào, hãy liên hệ với chúng tôi qua thông
+              tin bên dưới.
+            </p>
+            <div className="space-y-2 text-center">
               <p>
-                <strong>📍 Địa chỉ:</strong> 123 Hien sy, phong son, phong dien,
-                tp Hue
+                <strong>📍 Địa chỉ:</strong> Hiền sỹ, phong sơn, phường phong
+                thái, Thành phố Huế
               </p>
               <p>
                 <strong>📧 Email:</strong> support@hlsports.com
@@ -28,6 +28,11 @@ const Contact = () => {
                 <strong>📞 Điện thoại:</strong> 0123 456 789
               </p>
             </div>
+            <img
+              src="/3.jpg"
+              alt="HL_Sports avatar"
+              className="w-[260px] mb-6 border-4 rounded-full shadow-2xl h-[260px] border-white/40"
+            />
           </div>
 
           {/* Phần biểu mẫu liên hệ */}
