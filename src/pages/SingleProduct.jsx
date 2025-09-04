@@ -6,8 +6,10 @@ import { motion } from "framer-motion";
 import { getData } from "../helpers/index";
 import { serverUrl } from "../../config";
 import AddToCartButton from "../components/AddToCartButton";
+import { useTranslation } from "react-i18next";
 
 const SingleProduct = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState([]);
@@ -161,15 +163,20 @@ const SingleProduct = () => {
             <div className="flex items-center gap-4">
               {productInfo?.oldPrice && (
                 <span className="text-2xl text-gray-400 line-through">
-                  ${productInfo.oldPrice}
+                  {(productInfo.oldPrice * 25000).toLocaleString("vi-VN")} VND
                 </span>
               )}
               <span className="text-3xl font-light text-gray-900">
-                ${productInfo?.price}
+                {(productInfo?.price * 25000).toLocaleString("vi-VN")} VND
               </span>
               {productInfo?.oldPrice && (
                 <span className="px-3 py-1 text-sm font-medium text-red-700 bg-red-100 rounded-full">
-                  Save ${(productInfo.oldPrice - productInfo.price).toFixed(2)}
+                  Tiết kiệm{" "}
+                  {(
+                    (productInfo.oldPrice - productInfo.price) *
+                    25000
+                  ).toLocaleString("vi-VN")}{" "}
+                  VND
                 </span>
               )}
             </div>
@@ -362,7 +369,7 @@ const SingleProduct = () => {
           className="pt-16 mt-16 border-t border-gray-200"
         >
           <h2 className="mb-12 text-2xl font-light text-center">
-            Related Products
+            {t("relatedProductsSection.title")}
           </h2>
 
           {loadingRelated ? (
@@ -426,19 +433,22 @@ const SingleProduct = () => {
                   <div className="flex items-center gap-2 mb-3">
                     {product.discountedPercentage > 0 && (
                       <span className="text-sm text-gray-400 line-through">
-                        $
                         {(
-                          product.price /
-                          (1 - product.discountedPercentage / 100)
-                        ).toFixed(2)}
+                          (product.price /
+                            (1 - product.discountedPercentage / 100)) *
+                          25000
+                        ).toLocaleString("vi-VN")}{" "}
+                        {t("relatedProductsSection.currency")}
                       </span>
                     )}
                     <span className="text-lg font-light text-gray-900">
-                      ${product.price}
+                      {(product.price * 25000).toLocaleString("vi-VN")}{" "}
+                      {t("relatedProductsSection.currency")}
                     </span>
                     {product.discountedPercentage > 0 && (
                       <span className="px-2 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">
-                        {product.discountedPercentage}% off
+                        {product.discountedPercentage}{" "}
+                        {t("relatedProductsSection.discountLabel")}
                       </span>
                     )}
                   </div>
@@ -450,7 +460,7 @@ const SingleProduct = () => {
                       console.log("Add to cart:", product.name);
                     }}
                   >
-                    Add to Cart
+                    {t("relatedProductsSection.addToCartButton")}
                   </button>
                 </div>
               ))}
@@ -458,7 +468,7 @@ const SingleProduct = () => {
           ) : (
             <div className="py-12 text-center">
               <p className="text-lg text-gray-500">
-                No related products found.
+                {t("relatedProductsSection.noProductsMessage")}
               </p>
             </div>
           )}

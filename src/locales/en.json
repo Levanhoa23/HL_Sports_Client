@@ -285,5 +285,17 @@
     "mastercard": "Mastercard",
     "amex": "American Express",
     "paywithCard": "Pay with Card"
+  },
+
+  "relatedProductsSection": {
+    "title": "Related Products",
+    "loadingMessage": "Loading related products...",
+    "noProductsMessage": "No related products found.",
+    "addToCartButton": "Add to Cart",
+    "discountLabel": "% off",
+    "currency": "VND"
+  },
+  "Addtocabutton": {
+    "button": "Add to cart"
   }
 }

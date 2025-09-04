@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import {
   addToCart,
   decreaseQuantity,
@@ -11,6 +12,7 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import { cn } from "./ui/cn";
 
 const AddToCartButton = ({ item, className }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.orebiReducer);
   const [existingProduct, setExistingProduct] = useState(null);
@@ -42,11 +44,11 @@ const AddToCartButton = ({ item, className }) => {
               dispatch(decreaseQuantity(item?._id));
               toast.success("Quantity decreased successfully!");
             }}
-            className="border border-gray-300 text-gray-700 p-2 hover:border-black hover:text-black rounded-md text-sm transition-all duration-200 cursor-pointer disabled:text-gray-300 disabled:border-gray-200 disabled:hover:border-gray-200 disabled:hover:text-gray-300"
+            className="p-2 text-sm text-gray-700 transition-all duration-200 border border-gray-300 rounded-md cursor-pointer hover:border-black hover:text-black disabled:text-gray-300 disabled:border-gray-200 disabled:hover:border-gray-200 disabled:hover:text-gray-300"
           >
             <FaMinus />
           </button>
-          <p className="text-sm font-medium w-8 text-center">
+          <p className="w-8 text-sm font-medium text-center">
             {existingProduct?.quantity || 0}
           </p>
           <button
@@ -54,7 +56,7 @@ const AddToCartButton = ({ item, className }) => {
               dispatch(increaseQuantity(item?._id));
               toast.success("Quantity increased successfully!");
             }}
-            className="border border-gray-300 text-gray-700 p-2 hover:border-black hover:text-black rounded-md text-sm transition-all duration-200 cursor-pointer"
+            className="p-2 text-sm text-gray-700 transition-all duration-200 border border-gray-300 rounded-md cursor-pointer hover:border-black hover:text-black"
           >
             <FaPlus />
           </button>
@@ -62,9 +64,9 @@ const AddToCartButton = ({ item, className }) => {
       ) : (
         <button
           onClick={handleAddToCart}
-          className="w-full border border-black text-black text-xs font-medium py-3 px-6 uppercase tracking-wide hover:bg-black hover:text-white transition-all duration-200"
+          className="w-full px-6 py-3 text-xs font-medium tracking-wide text-black uppercase transition-all duration-200 border border-black hover:bg-black hover:text-white"
         >
-          Add to cart
+          {t("Addtocabutton.button")}
         </button>
       )}
     </>

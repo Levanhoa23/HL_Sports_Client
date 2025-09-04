@@ -284,5 +284,17 @@
     "mastercard": "Mastercard",
     "amex": "American Express",
     "paywithCard": "Thanh toán với"
+  },
+
+  "relatedProductsSection": {
+    "title": "Sản phẩm liên quan",
+    "loadingMessage": "Đang tải sản phẩm liên quan...",
+    "noProductsMessage": "Không tìm thấy sản phẩm liên quan.",
+    "addToCartButton": "Thêm vào giỏ",
+    "discountLabel": "% giảm",
+    "currency": "VND"
+  },
+  "Addtocabutton": {
+    "button": "Thêm vào giỏ"
   }
 }
